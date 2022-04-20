@@ -1,0 +1,20 @@
+﻿CREATE TABLE [dbo].[Reports]
+(
+	[ReportId] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [varchar](100) NOT NULL,
+	[Description2] [varchar](100) NULL,
+	[Description3] [varchar](100) NULL,
+	[DrillThruValue] [varchar](150) NULL,
+	[Start] [datetime] NULL,
+	[Stop] [datetime] NULL,
+	[ProcName] [varchar](50) NULL,
+	[ReportType] [char](1) NOT NULL,
+	[ReadOnlyAccess] [bit] NOT NULL,
+	[BreakTabOn] [varchar](50) NULL,
+	[CategoryAxis] [varchar](50) NULL,
+	[ValueAxis] [varchar](50) NULL,
+	[ShowDateRange] [bit] NOT NULL,
+	[WaitSecs] [int] NOT NULL,
+	[OptionalFilter] [varchar](50) NULL,
+	CONSTRAINT [PK_Reports] PRIMARY KEY CLUSTERED ([ReportId] ASC),
+)

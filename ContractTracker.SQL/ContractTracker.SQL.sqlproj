@@ -96,7 +96,6 @@
     <Build Include="Tables\UserUnits.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ContractTracker.SQL.publish.xml" />
-    <None Include="ContractTracker.Local.publish.xml" />
+    <None Include="ContractTracker.SQL.Local.publish.xml" />
   </ItemGroup>
 </Project>

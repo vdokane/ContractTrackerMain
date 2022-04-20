@@ -43,7 +43,7 @@ namespace ContractTracker.Repository.Test
 
         private List<Users> BuildSomeUsers()
         {
-            var user = new Users() { CreatedByUserId = 1, CreatedDate = DateTime.Now, UnitId = 1, UserLogInName = "test", PositionTitle = "req", UserEmail = "test@test.com", UserName = "some test" };
+            var user = new Users() { CreatedByUserId = 1, CreatedDate = DateTime.Now, UserLogInName = "test", PositionTitle = "req", UserEmail = "test@test.com", UserName = "some test" };
             var testUsers = new List<Users>();
             testUsers.Add(user);
             return testUsers;

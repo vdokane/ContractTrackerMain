@@ -3,24 +3,20 @@ using ContractTracker.Repository.EntityModels;
 using ContractTracker.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ContractTracker.Repository.QueryRepositories
 {
-    public interface ICaseQueryRepository {
-        Task<Contracts> GetContractById(int id);
-    }
-    public class CaseQueryRepository : ICaseQueryRepository
+    public class UserUnitQueryRepository : IUserUnitQueryRepository
     {
         private readonly TrackerDbContext context;
-        public CaseQueryRepository(IUnitOfWork unitOfWork)
+        public UserUnitQueryRepository(IUnitOfWork unitOfWork)
         {
             context = unitOfWork.GetContext();
         }
 
-        public async Task<Contracts> GetContractById(int id)
+        public async Task<List<int>?> GetAllUnitIdsForAUser(int userId)
         {
-            var entity = await context.Contracts.FindAsync(id);
-            return entity;
+            var unitIds = await context.UserUnits.Where(u => u.UserId == userId).Select(x => x.UnitId).ToListAsync();
+            return unitIds;
         }
     }
 }

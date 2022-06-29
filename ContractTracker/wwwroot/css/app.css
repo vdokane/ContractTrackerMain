@@ -62,17 +62,3 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
-
-/* todo, this should maybe be in main layout razor css? */
-header {
-    background-color: #0f2844;
-}
-
-.navbar {
-    background-color: #0f2844 !important;
-    color: white !important;
-}
-
-.nav-link {
-    color: white !important;
-}

@@ -10,10 +10,6 @@ using System.Threading.Tasks;
 
 namespace ContractTracker.Repository.QueryRepositories
 {
-    public interface IUserQueryRepository
-    {
-        Task<Users> GetUserByLoginName(string loginName);
-    }
     public class UserQueryRepository : IUserQueryRepository
     {
         private readonly TrackerDbContext context;

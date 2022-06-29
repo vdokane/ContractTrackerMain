@@ -1,0 +1,9 @@
+﻿@inject NavigationManager nav
+@code {
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        var url = nav.BaseUri + "Login";
+        nav.NavigateTo(url);
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

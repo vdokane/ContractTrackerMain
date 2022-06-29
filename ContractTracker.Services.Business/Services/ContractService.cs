@@ -1,4 +1,5 @@
-﻿using ContractTracker.Repository.QueryRepositories;
+﻿using ContractTracker.Repository.Interfaces;
+using ContractTracker.Repository.QueryRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace ContractTracker.Services.Business.Services
     }
     public class ContractService : IContractService
     {
-        public ICaseQueryRepository caseQueryRepository;
+        public IContractQueryRepository contractQueryRepository;
 
-        public ContractService(ICaseQueryRepository caseQueryRepository)
+        public ContractService(IContractQueryRepository contractQueryRepository)
         {
-            this.caseQueryRepository = caseQueryRepository;
+            this.contractQueryRepository = contractQueryRepository;
         }
     }
 }

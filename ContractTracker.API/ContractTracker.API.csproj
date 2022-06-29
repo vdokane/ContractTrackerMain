@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>5f5f3dc9-79d5-40ca-830a-603b6ccdf1c6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ContractTracker.Common\ContractTracker.Common.csproj" />
+    <ProjectReference Include="..\ContractTracker.Services.Authentication\ContractTracker.Services.Authentication.csproj" />
+    <ProjectReference Include="..\ContractTracker.Services.Business\ContractTracker.Services.Business.csproj" />
+  </ItemGroup>
+
+</Project>

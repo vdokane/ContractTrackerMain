@@ -24,7 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Export.Test", "ContractTracker.Export.Test\ContractTracker.Export.Test.csproj", "{946DBCEC-1C5E-4707-9269-00E1E87AD0F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractTracker.Repository.Test", "ContractTracker.Repository.Test\ContractTracker.Repository.Test.csproj", "{FE163055-A3F9-4B96-B3FF-BF643D361DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Repository.Test", "ContractTracker.Repository.Test\ContractTracker.Repository.Test.csproj", "{FE163055-A3F9-4B96-B3FF-BF643D361DAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.API", "ContractTracker.API\ContractTracker.API.csproj", "{10758218-FA62-4FCA-BFA8-BBB5BE86784A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractTracker.Services.Authentication", "ContractTracker.Services.Authentication\ContractTracker.Services.Authentication.csproj", "{1ED7058F-7E22-43E2-81F1-B60792BCAC69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +74,14 @@ Global
 		{FE163055-A3F9-4B96-B3FF-BF643D361DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE163055-A3F9-4B96-B3FF-BF643D361DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE163055-A3F9-4B96-B3FF-BF643D361DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10758218-FA62-4FCA-BFA8-BBB5BE86784A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10758218-FA62-4FCA-BFA8-BBB5BE86784A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10758218-FA62-4FCA-BFA8-BBB5BE86784A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10758218-FA62-4FCA-BFA8-BBB5BE86784A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED7058F-7E22-43E2-81F1-B60792BCAC69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED7058F-7E22-43E2-81F1-B60792BCAC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED7058F-7E22-43E2-81F1-B60792BCAC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED7058F-7E22-43E2-81F1-B60792BCAC69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

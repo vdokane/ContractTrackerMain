@@ -1,5 +1,26 @@
-﻿@inherits LayoutComponentBase
+﻿@using ContractTracker.Authentication
+@inherits LayoutComponentBase
+@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider authenticationStateProvider; 
+<RadzenNotification />
 
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <input type="button" value="Logout" @onclick="LogoutUser" class="btn btn-primary" />
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@*
 <header>
     <NavMenu />
 </header>
@@ -9,3 +30,11 @@
         @Body
     </main>
 </div>
+*@
+
+@code {
+    private async Task LogoutUser()
+    {
+         await ((TrackerAuthenticationStateProvider)authenticationStateProvider).NotifyUserLogout();
+    }
+}

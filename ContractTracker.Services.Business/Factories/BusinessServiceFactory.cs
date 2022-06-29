@@ -1,4 +1,5 @@
 ﻿using ContractTracker.Repository.Interfaces;
+using ContractTracker.Repository.MockQueryRepositories;
 using ContractTracker.Repository.QueryRepositories;
 using ContractTracker.Services.Business.Services;
 
@@ -27,13 +28,29 @@ namespace ContractTracker.Services.Business.Factories
 
         public IContractService BuidContractService()
         {
-            ICaseQueryRepository caseQueryRepository = new CaseQueryRepository(unitOfWork);
-            return new ContractService(caseQueryRepository);
+            //todo, fix misspelling
+            IContractQueryRepository contractQueryRepository = new ContractQueryRepository(unitOfWork);
+            return new ContractService(contractQueryRepository);
         }
 
-        public IUserService BuidUserService()
+        //TODO, this is another one you need to mock for testing in the cloud
+        public IUserService BuidUserService(bool useMock)
         {
-            return new UserService();
+            IUserUnitQueryRepository userUnitQueryRepository;
+            IUserQueryRepository userQueryRepository;
+
+            if(useMock)
+            {
+                 userUnitQueryRepository = new MockUserUnitQueryRepository(unitOfWork);  
+                 userQueryRepository = new MockUserQueryRepository(unitOfWork);
+            }
+            else
+            {
+                 userUnitQueryRepository = new UserUnitQueryRepository(unitOfWork);
+                 userQueryRepository = new UserQueryRepository(unitOfWork);
+            }
+
+            return new UserService(userQueryRepository, userUnitQueryRepository);
         }
              
     }

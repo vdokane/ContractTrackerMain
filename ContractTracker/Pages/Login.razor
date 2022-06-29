@@ -1,0 +1,61 @@
+﻿@page "/login"
+@attribute [AllowAnonymous]
+@inherits LoginComponentBase
+@layout LoginLayout
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Login</h1>
+    </div>
+</div>
+
+@if (loginComponentModel != null)
+{
+    <EditForm Model="loginComponentModel">
+    <div class="row">
+        <div class="col-md-2">
+            <label>Domain:</label>
+        </div>
+        <div class="col-md-4">
+            <InputSelect class="form-select" id="domain" @bind-Value="loginComponentModel.Domain">
+                @foreach (var domain in loginComponentModel.DomainSelectItems)
+                {
+                <option value=@domain.Value>@domain.Text</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label>User Name:</label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" @bind=loginComponentModel.Username class="form-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Password:</label>
+        </div>
+        <div class="col-md-4">
+            <input type="password" @bind=loginComponentModel.Password class="form-control">
+        </div>
+    </div>
+    </EditForm>
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="button" value="Login" @onclick="LoginUser" class="btn btn-primary" />
+    </div>
+
+    @if (userIdComponent != null)
+    {
+        <div class="mt-4">
+            @(userIdComponent)
+        </div>
+    }
+</div>

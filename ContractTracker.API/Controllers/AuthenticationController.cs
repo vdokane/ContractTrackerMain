@@ -1,4 +1,4 @@
-﻿using ContractTracker.Common.ClientAndServerRequestModels;
+﻿using ContractTracker.Common.ClientAndServerModels.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

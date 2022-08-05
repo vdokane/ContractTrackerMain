@@ -9,10 +9,12 @@ namespace ContractTracker.Authentication
         private readonly IConfiguration config;
         private readonly ILocalStorageService localStorage;
         private readonly AuthenticationState anonymous;
+        //private readonly HttpClient Http;
         public TrackerAuthenticationStateProvider(ILocalStorageService localStorage, IConfiguration config)
         {
             this.localStorage = localStorage;
             this.config = config;
+            //this.Http = Http;
             var identity = new ClaimsIdentity();
             var notFound = new ClaimsPrincipal(identity);
             anonymous = new AuthenticationState(notFound);
@@ -33,6 +35,12 @@ namespace ContractTracker.Authentication
         {
             var authenticatedUser = BuildAuthenticatedUserToken(token);
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+
+            //Note, this must be added first so the API's that validate the user can have authentication.
+            //but how will this apply it ato all
+            //Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+
             NotifyAuthenticationStateChanged(authState);
         }
 

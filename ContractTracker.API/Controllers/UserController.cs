@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using ContractTracker.Common.ClientAndServerRequestModels.UserModels;
+using ContractTracker.Common.ClientAndServerModels.User;
 using ContractTracker.Services.Business.Factories;
 
 namespace ContractTracker.API.Controllers
@@ -16,7 +16,6 @@ namespace ContractTracker.API.Controllers
         public int GetUserIdByUserName(string userName)
         {
             //2022/05/31, we shouldn't really use this too much. This should be done per request. 
-            decimal dBug = -1;
             var userId = base.GetCurrentUser();
             //TODO Here is where we would use the AUTHENTICATED username to find the user in this app's specifi database. This would build the actual user model which
             //   which would be app specific
@@ -25,7 +24,7 @@ namespace ContractTracker.API.Controllers
 
 
         [HttpGet("getuserbyusername")]
-        public async Task<UserResponseModel> GetUserByUserName(string username)
+        public async Task<UserResponseModel?> GetUserByUserName(string username)
         {
 
             var uowFactory = new UowFactory(GetConnectionString());

@@ -1,4 +1,4 @@
-﻿namespace ContractTracker.Common.ClientAndServerRequestModels.UserModels
+﻿namespace ContractTracker.Common.ClientAndServerModels.User
 {
     public class UserResponseModel
     {

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="ClientModels\UserModels\" />
-    <Folder Include="deleteme\" />
   </ItemGroup>
 
   <ItemGroup>

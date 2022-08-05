@@ -1,8 +1,6 @@
 ﻿using ContractTracker.Repository.QueryRepositories;
 using ContractTracker.Services.Business.Models;
 using ContractTracker.Repository.Interfaces;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContractTracker.Services.Business.Services
 {

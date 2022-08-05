@@ -1,16 +1,11 @@
 ﻿using ContractTracker.Services.Business.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ContractTracker.Repository.EntityModels;
 
 namespace ContractTracker.Services.Business.Mappers
 {
     internal class AnnouncementMapper
     {
-        public static AnnouncementResponseModel MapEntityToModel(Announcements entity)
+        public static AnnouncementResponseModel? MapEntityToModel(Announcements entity)
         {
             if (entity == null)
                 return null;

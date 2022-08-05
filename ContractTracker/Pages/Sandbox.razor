@@ -1,0 +1,33 @@
+﻿@page "/sandbox"
+@attribute [AllowAnonymous]
+@inherits SandboxComponentBase
+
+<h3>Sandbox</h3>
+
+<div class="row form-row">
+    <div class="col-md-12">
+        <input type="button" value="Get Complex Object" @onclick="GetComplexModel" class="btn btn-primary" />
+    </div>
+</div>
+
+<div class="row form-row">
+    <div class="col-md-12">
+        <input type="button" value="Get Complex Object With Params" @onclick="GetComplexModelWithParams" class="btn btn-primary" />
+    </div>
+</div>
+
+
+<div class="row form-row">
+    <div class="col-md-12">
+        <input type="button" value="Post Object" @onclick="PostObject" class="btn btn-outline-secondary" />
+    </div>
+</div>
+
+<div class="row form-row">
+    <div class="col-md-12">
+        <input type="button" value="Go Kaboom" @onclick="InvokeKaboom" class="btn btn-outline-secondary" />
+    </div>
+</div>
+
+
+ 

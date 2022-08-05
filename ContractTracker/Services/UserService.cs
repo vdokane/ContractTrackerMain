@@ -1,6 +1,8 @@
-﻿using ContractTracker.Common.ClientAndServerRequestModels.UserModels;
+﻿using ContractTracker.Common.ClientAndServerModels.User;
 using Newtonsoft.Json;
-using System.Net.Http.Json;
+using ContractTracker.Infrastructure;
+using ContractTracker.Authentication;
+using Blazored.LocalStorage;
 
 namespace ContractTracker.Services
 {
@@ -8,41 +10,28 @@ namespace ContractTracker.Services
     {
         Task<UserResponseModel?> GetUserByUsername(string username);
     }
-    public class UserService : IUserService
+    public class UserService : ServiceBase, IUserService
     {
-        private readonly HttpClient httpClient;
-        public UserService(HttpClient httpClient)
+        public UserService(HttpClient httpClient, IConfiguration configuration, ILocalStorageService localStorage) : base(httpClient, configuration, localStorage)
         {
-            this.httpClient = httpClient;
         }
 
         public async Task<UserResponseModel?> GetUserByUsername(string username)
         {
             try
             {
-                //TODO, better way of getting base URL
-                var response = await httpClient.GetStringAsync("http://localhost:25940/api/user/getuserbyusername?username=" + username);
+                await SetJwtAuthHeader();
+                var route = baseUrlForApiSite + ServiceRoutes.User.GetUserByUsernameApiUrl(username);
+                var response = await base.httpClient.GetStringAsync(route);
 
                 if (string.IsNullOrEmpty(response))
                     return null;
 
-                var userResponseModel = JsonConvert.DeserializeObject<UserResponseModel>(response);
-                return userResponseModel;
-
-                //var userResponseModel = new UserResponseModel();
-                //return userResponseModel;
-                /*
-                var rawJson = await response.Content.ReadAsStringAsync();
-                if (string.IsNullOrEmpty(rawJson))
-                    return null;
-
-                var userResponseModel = JsonConvert.DeserializeObject<UserResponseModel>(rawJson);
-                return userResponseModel;
-                */
+                var responseModel = JsonConvert.DeserializeObject<UserResponseModel>(response);
+                return responseModel;
             }
-            catch(Exception ex)
+            catch  
             {
-                string wtf = ex.ToString();
                 return null;
             }
         }

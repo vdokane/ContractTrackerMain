@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Repository.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.API", "ContractTracker.API\ContractTracker.API.csproj", "{10758218-FA62-4FCA-BFA8-BBB5BE86784A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractTracker.Services.Authentication", "ContractTracker.Services.Authentication\ContractTracker.Services.Authentication.csproj", "{1ED7058F-7E22-43E2-81F1-B60792BCAC69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Services.Authentication", "ContractTracker.Services.Authentication\ContractTracker.Services.Authentication.csproj", "{1ED7058F-7E22-43E2-81F1-B60792BCAC69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

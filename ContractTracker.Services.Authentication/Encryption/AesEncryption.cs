@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ContractTracker.Services.Authentication.Encryption
 {
+    /*
     public class AesEncryption : IEncryptionService
     {
         private readonly AesCryptoServiceProvider aesCryptoServiceProvider;
@@ -88,5 +89,5 @@ namespace ContractTracker.Services.Authentication.Encryption
             return plaintext;
         }
     }
-
+    */
 }

@@ -1,4 +1,4 @@
-﻿namespace ContractTracker.Common.ClientAndServerRequestModels
+﻿namespace ContractTracker.Common.ClientAndServerModels.Authentication
 {
     public class UserAuthenticationRequestModel
     {

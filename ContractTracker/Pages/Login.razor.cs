@@ -55,10 +55,7 @@ namespace ContractTracker.Pages
 
         protected async Task LoginUser()
         {
-            decimal dBug = -1;
-            
             var jwtResponse = await authenticationService.LoginJwt(loginComponentModel.Domain, loginComponentModel.Username, loginComponentModel.Password);  
-
             if(string.IsNullOrEmpty(jwtResponse))
             {
                 notificationService.Notify(NotificationSeverity.Error, "Error!", "There was a problem!", 4000);
@@ -78,9 +75,6 @@ namespace ContractTracker.Pages
                 notificationService.Notify(NotificationSeverity.Error, "Error!", "There was a problem!", 4000);
                 return;
             }
-
-            //Note, this must be added first so the API's that validate the user can have authentication.
-            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtResponse);
 
             //Next get the user from the DB. Make sure that not only the user has been authenticated but they are also a user in our system. 
 

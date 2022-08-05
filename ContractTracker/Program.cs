@@ -20,9 +20,13 @@ namespace ContractTracker
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore(); //Part of NuGet Microsoft.AspNetCore.Components.Authorization;
             builder.Services.AddScoped<AuthenticationStateProvider, TrackerAuthenticationStateProvider>();
+            
             //Client services
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<Services.IUserService, Services.UserService>();
+            builder.Services.AddScoped<Services.IVendorService, Services.VendorService>();
+            builder.Services.AddScoped<Services.ISandboxService, Services.SandboxService>();
+             
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<NotificationService>(); //For toasts

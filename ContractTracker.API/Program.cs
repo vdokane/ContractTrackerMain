@@ -1,3 +1,4 @@
+using ContractTracker.API.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //Use NuGet Microsoft.AspNetCore.Authentication.JwtBearer
 
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
-
+builder.Services.AddHttpContextAccessor(); //For passing the HttContext into services
 
 //Stored in secrets.json, whish needs to be managed per project by Manager User Secrets. 
 var issuerSigningKey = builder.Configuration["IssuerSigningKey"];
@@ -43,12 +44,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         };
                 });
 
-                
-                //TODO so it can use normal cookies also .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => Configuration.Bind("CookieSettings", options));
+
+//TODO so it can use normal cookies also .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => Configuration.Bind("CookieSettings", options));
 
 
 
 
+//Register NONE business services for injection. Ex: Authorization, Authentication services, HttpContext services, etc.
+builder.Services.AddTransient<ISignedInUserService, SignedInUserService>();
+ 
 
 var app = builder.Build();
 

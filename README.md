@@ -1,10 +1,9 @@
-# TODO  2022/09/01
--- soo.. I have BaseExceptionResponseModel, should I just make this a base Response so it can handle success messages as well?
-- Add toasts
-- Lastly, get the cookie to expire
-- Redirect on login
+# TODO  2022/09/06
 - Redirect on lougout/force expire
 - Commit finally
+- Update DB to match production changes in legacy system
+- Filters for griding system ..ugh.. 
+--Seed script for [dbo].[ProcurementMethods] needs to be updated
 
 # TODO  2022/08/05
 
@@ -21,7 +20,6 @@ TokenBuilder is in common so how do I want to store that for the web app? isDev(
 - Start work items in ADO to keep track of all of this instead of the read me
 -  
 - Finish up adding all services/factory <-- or do I want to leverage native DI more?
-- Best way to do business rules and return it back to the client, should it just throw 500?
 - General design
 - Data migration
 - Do sole source tables, routing.. 

@@ -5,7 +5,6 @@ using ContractTracker.Authentication;
 using Blazored.LocalStorage;
 using System.Text;
 using System.Net;
-using ContractTracker.ClientModels.BusinessRuleExceptionModels;
 
 namespace ContractTracker.Services
 {
@@ -144,25 +143,6 @@ namespace ContractTracker.Services
 
                 var responseTEST = await httpClient.GetAsync(route); //This might be the way
                 
-                
-                
-                
-                /* OR... don't worry about returning just the base, return the whole model and assume it is inherited correctly. You could still do something with the 400 though
-                
-                //var moreTst = responseTEST.Content.ReadAsStringAsync();
-                if (responseTEST.StatusCode == HttpStatusCode.BadRequest)
-                {
-                    //TODO parse to business rule exception model , throw exception? 
-
-                    //So this works but how can I get this to return with generics? 
-                    return HandleBusinessRuleException<T>(responseTEST.Content); 
-                    var baseModelToAllClientModels = HandleBusinessRuleException(responseTEST.Content);
-                    //return baseModelToAllClientModels;
-                    return default; //???
-                }
-                
-                //var response = await httpClient.GetStringAsync(route);
-                */
 
                 var payload = responseTEST.Content.ReadAsStream();
 
@@ -274,7 +254,7 @@ namespace ContractTracker.Services
 
         }
 
-
+        /*
         private DeprecatedBaseExceptionModel HandleBusinessRuleException<T>(HttpContent content)
         {
             var payload = content.ReadAsStream();
@@ -287,7 +267,7 @@ namespace ContractTracker.Services
                 var response = reader.ReadToEnd();
                 return JsonConvert.DeserializeObject<DeprecatedBaseExceptionModel>(response);
             }
-        }
+        } */
 
     }
 

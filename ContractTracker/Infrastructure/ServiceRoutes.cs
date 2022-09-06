@@ -41,6 +41,10 @@
             {
                 return $"/api/sandbox/kaboom";
             }
+            public static string KaboomBusinessRuleApiUrl()
+            {
+                return $"/api/sandbox/businessruleexception";
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 using ContractTracker.API.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //Use NuGet Microsoft.AspNetCore.Authentication.JwtBearer
+using ContractTracker.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +49,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //TODO so it can use normal cookies also .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => Configuration.Bind("CookieSettings", options));
 
 
-
-
 //Register NONE business services for injection. Ex: Authorization, Authentication services, HttpContext services, etc.
 builder.Services.AddTransient<ISignedInUserService, SignedInUserService>();
  
@@ -62,10 +61,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
  }
-
-app.UseCors(); //?? Will this work?
+app.UseBusinessRuleException();
+app.UseCors();  
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -1,6 +1,9 @@
-﻿using ContractTracker.Authentication.Models;
+﻿using Blazored.LocalStorage;
+using ContractTracker.Authentication.Models;
+using ContractTracker.Common.Helpers;
 using ContractTracker.Infrastructure;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace ContractTracker.Authentication
 {
@@ -8,7 +11,7 @@ namespace ContractTracker.Authentication
     {
         //Task<AuthorizedUserModel> Login(string userName, string passWord);
         Task<string?> LoginJwt(string domain, string userName, string passWord);
-        void Logout();
+        LocalStorageModel BuildLocalStorageModel(string jwtResponse);
     }
     internal class AuthenticationService : IAuthenticationService
     {
@@ -22,49 +25,7 @@ namespace ContractTracker.Authentication
             baseUrlForApiSite = configuration.GetValue<string>("BaseUrlApi");
         }
 
-        /// <summary>
-        /// TODO- The base url and the URI should be a setting per environment.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="passWord"></param>
-        /// <returns></returns>
-        /*
-        public async Task<AuthorizedUserModel> Login(string userName, string passWord)
-        {
-
-            var request = new AuthUserRequestModel() { Password = passWord, UserName = userName };
-            var response = await httpClient.PostAsJsonAsync<AuthUserRequestModel>(baseUrlForApiSite + ServiceRoutes.LoginApiUrl, request);
-            var jwt = await response.Content.ReadAsStringAsync();
-
-            Common.Functionality.TokenBuilder tokenBuilder = new Common.Functionality.TokenBuilder();
-            var claims = tokenBuilder.GetClaimsFromToken(jwt);
-            AuthorizedUserModel currentUser = new AuthorizedUserModel();
-            foreach (System.Security.Claims.Claim claim in claims)
-            {
-                if (claim.Type == "email")
-                {
-                    currentUser.Email = claim.Value;
-                }
-                else if (claim.Type == "role")
-                {
-                    currentUser.Role = claim.Value;
-                }
-                else if (claim.Type == "unique_name")
-                {
-                    currentUser.UserName = claim.Value;
-                }
-                else if (claim.Type == "nameid")
-                {
-                    currentUser.UserId = Convert.ToInt16(claim.Value);
-                }
-            }
-
-            return currentUser;
-            //todo, get the actual JWT from the response body        
-            //await localStorageService.SetItemAsync("isUserValid", valid.Content);
-            //await localStorageService.SetItemAsync("isUserValid", "todo"); (this might be better to do at the calling logic)
-        }
-        */
+       
 
         public async Task<string?> LoginJwt(string domain, string userName, string passWord)
         {
@@ -82,11 +43,12 @@ namespace ContractTracker.Authentication
             }
         }
 
-        public void Logout()
+        public LocalStorageModel BuildLocalStorageModel(string jwtResponse)
         {
-            //Removed local storage
-            //Notified auth state
-            //Removed  _client.DefualtRequestHeaders.Authorization = null;
+            var localStorageModel = new LocalStorageModel();
+            localStorageModel.cs9s9w2kcks = Base64Helper.Encode(DateTime.UtcNow.ToString());  //Encode for quick entropy
+            localStorageModel.sdoj22sd0sld = jwtResponse;
+            return localStorageModel;
         }
     }
 }

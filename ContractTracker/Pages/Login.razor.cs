@@ -4,6 +4,9 @@ using ContractTracker.ClientModels.LoginModels;
 using ContractTracker.ClientModels.Generic;
 using Radzen;
 using ContractTracker.Services;
+using ContractTracker.Authentication.Models;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace ContractTracker.Pages
 {
@@ -62,9 +65,9 @@ namespace ContractTracker.Pages
                 return;
             }
 
-            //TODO, figure out a good way to expire this
+            var localStorageModel = authenticationService.BuildLocalStorageModel(jwtResponse);
             var authConstants = new AuthConstants(config);
-            await localStorage.SetItemAsync(authConstants.LocalStorageKeyForJwt, jwtResponse); 
+            await localStorage.SetItemAsync(authConstants.LocalStorageKeyForJwt, localStorageModel); 
 
             ((TrackerAuthenticationStateProvider)authenticationStateProvider).NotifyUserAuthenticaiton(jwtResponse);
 
@@ -76,12 +79,6 @@ namespace ContractTracker.Pages
                 return;
             }
 
-            //Next get the user from the DB. Make sure that not only the user has been authenticated but they are also a user in our system. 
-
-
-
-            //TODO figure out injection for user services
-            //IUserService userServices = new UserService(Http);
             if(authState.User.Identity?.Name == null)
             {
                 userIdComponent = "crap, name isn't working";
@@ -94,11 +91,17 @@ namespace ContractTracker.Pages
             if (userResponseModel != null)
                 userIdComponent = userResponseModel.UserId.ToString();
             else
-                userIdComponent = "crap, no response";
+                userIdComponent = "Couldn't find the user or no response";
 
-            //FINALLY TODO, if user is good to go, send them to the hme page navigationManager.NavigateTo("counter");
+            //FINALLY TODO, if user is good to go, send them to the hme page
+            navigationManager.NavigateTo("sandbox");
 
 
+        }
+
+        protected async Task LogoutUser()
+        {
+            await ((TrackerAuthenticationStateProvider)authenticationStateProvider).NotifyUserLogout();
         }
     }
 }

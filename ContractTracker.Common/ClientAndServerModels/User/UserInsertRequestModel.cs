@@ -1,6 +1,8 @@
-﻿namespace ContractTracker.Common.ClientAndServerModels.User
+﻿using ContractTracker.Common.ClientAndServerModels.Exception;
+
+namespace ContractTracker.Common.ClientAndServerModels.User
 {
-    public class UserInsertRequestModel
+    public class UserInsertRequestModel : BaseResponseModel
     {
         public string UserName { get; set; } = string.Empty;   
         public string FirstName { get; set; } = string.Empty;

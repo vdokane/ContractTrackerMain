@@ -1,8 +1,16 @@
-# TODO  2022/08/05
-- Very next this is have a pipeline catch this BusinessRuleException and return a 400 bad request
-- https://docs.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0
-- Then have the client capture 400s and toast them with the messages
+# TODO  2022/09/01
+-- soo.. I have BaseExceptionResponseModel, should I just make this a base Response so it can handle success messages as well?
+- Add toasts
 - Lastly, get the cookie to expire
+- Redirect on login
+- Redirect on lougout/force expire
+- Commit finally
+
+# TODO  2022/08/05
+
+- https://docs.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0
+
+
 
 # TODO  update 2022/06/29 (I think this is mostly done)
 

@@ -1,6 +1,8 @@
-﻿namespace ContractTracker.Common.ClientAndServerModels.Vendor
+﻿using ContractTracker.Common.ClientAndServerModels.Exception;
+
+namespace ContractTracker.Common.ClientAndServerModels.Vendor
 {
-    public class VendorResponseModel
+    public class VendorResponseModel : BaseResponseModel
     {
         public int VendorId { get; set; }
         public string? VendorType { get; set; }

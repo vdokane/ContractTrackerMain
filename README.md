@@ -1,8 +1,15 @@
+# TODO  2022/09/06
+- Redirect on lougout/force expire
+- Commit finally
+- Update DB to match production changes in legacy system
+- Filters for griding system ..ugh.. 
+--Seed script for [dbo].[ProcurementMethods] needs to be updated
+
 # TODO  2022/08/05
-- Very next this is have a pipeline catch this BusinessRuleException and return a 400 bad request
+
 - https://docs.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0
-- Then have the client capture 400s and toast them with the messages
-- Lastly, get the cookie to expire
+
+
 
 # TODO  update 2022/06/29 (I think this is mostly done)
 
@@ -13,7 +20,6 @@ TokenBuilder is in common so how do I want to store that for the web app? isDev(
 - Start work items in ADO to keep track of all of this instead of the read me
 -  
 - Finish up adding all services/factory <-- or do I want to leverage native DI more?
-- Best way to do business rules and return it back to the client, should it just throw 500?
 - General design
 - Data migration
 - Do sole source tables, routing.. 

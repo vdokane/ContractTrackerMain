@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using ContractTracker.Common.ClientAndServerModels.User;
-using ContractTracker.Services.Business.Factories;
 using ContractTracker.API.Services;
 using ContractTracker.Common.Infrastructure;
 
@@ -13,8 +12,7 @@ namespace ContractTracker.API.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SandboxApiController : BaseApiController
     {
-        //builder.Services.AddHttpContextAccessor();
-        private readonly ISignedInUserService signedInUserServiceAccessor; //todo, inject
+        private readonly ISignedInUserService signedInUserServiceAccessor; 
         public SandboxApiController(ISignedInUserService signedInUserServiceAccessor)
         {
             this.signedInUserServiceAccessor = signedInUserServiceAccessor;
@@ -51,17 +49,7 @@ namespace ContractTracker.API.Controllers
         {
             decimal dBug = -1;
             var currentUserName = ThisShouldBeaService_GetCurrentUserAccountName();
-            //var signedInUserService = new SignedInUserService(HttpContext); //So this works, but how do I avoid calling this on EVERY api method? 
-            //var shouldAlsoBeCurrentUserName = signedInUserService.GetCurrentUserAccountName();
-            
-            
-            
-            
-            
-            //Oh shit it worked!!
             var shouldBeCurrentUserName3 = signedInUserServiceAccessor.GetCurrentUserAccountName();
-
-
             var mutatedData = requestModel.UnitId + 1;
              return new UserResponseModel() { Role = "sandbox", UserId = 777, UserName = requestModel.UserName, UserUnitIds = new List<int>() { mutatedData } };
 
@@ -72,8 +60,6 @@ namespace ContractTracker.API.Controllers
         {
             decimal dBug = -1;
             var currentUserName = ThisShouldBeaService_GetCurrentUserAccountName();
-            //var shouldAlsoBeCurrentUserName = signedInUserService.GetCurrentUserAccountName();
-            //TODO, then use currentUserName to make sure they have the permissions to do stuff
             var mutatedData = requestModel.UnitId + 1;
             return new UserResponseModel() { Role = "sandbox", UserId = 777, UserName = requestModel.UserName, UserUnitIds = new List<int>() { mutatedData } };
 
@@ -83,14 +69,22 @@ namespace ContractTracker.API.Controllers
         public UserResponseModel Kaboom()
         {
             decimal dBug = -1;
-            var ValidationMessages = new ValidationMessage[] { new ValidationMessage("99", "messag1"), new ValidationMessage("98", "message2") };
-            throw new BusinessRuleException(ValidationMessages); //So why didn't my messages get send with error?
-            //throw new Exception("Kaboom");
+            
+            throw new Exception("Kaboom");
 
             return new UserResponseModel() { Role = "sandbox", UserId = 777, UserName = "Kaboom.User", UserUnitIds = new List<int>() { 1,2,3 } };
 
         }
 
+        [HttpGet("businessruleexception")]
+        [AllowAnonymous] //Make sure to remove this before production!!! 
+        public void BusinessRuleException()
+        {
+            decimal dBug = -1;
+            var validationMessages = new ValidationMessage[] { new ValidationMessage("99", "messag1"), new ValidationMessage("98", "message2") };
+            //well sht it hit my crap before executing 
+            throw new BusinessRuleException(validationMessages);
+        }
 
 
         private string? ThisShouldBeaService_GetCurrentUserAccountName()

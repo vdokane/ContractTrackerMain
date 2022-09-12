@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using System.Security.Claims;
+using ContractTracker.Authentication.Models;
+using ContractTracker.Common.Helpers;
 
 namespace ContractTracker.Authentication
 {
@@ -9,12 +11,11 @@ namespace ContractTracker.Authentication
         private readonly IConfiguration config;
         private readonly ILocalStorageService localStorage;
         private readonly AuthenticationState anonymous;
-        //private readonly HttpClient Http;
+
         public TrackerAuthenticationStateProvider(ILocalStorageService localStorage, IConfiguration config)
         {
             this.localStorage = localStorage;
             this.config = config;
-            //this.Http = Http;
             var identity = new ClaimsIdentity();
             var notFound = new ClaimsPrincipal(identity);
             anonymous = new AuthenticationState(notFound);
@@ -23,11 +24,24 @@ namespace ContractTracker.Authentication
         {
             var authConstants = new AuthConstants(config);
             var localStorageKey = authConstants.LocalStorageKeyForJwt;
-            var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-            if (string.IsNullOrEmpty(jwt))
+
+            var localStorageModel = await localStorage.GetItemAsync<LocalStorageModel>(localStorageKey);
+            if (localStorageModel == null)
                 return anonymous;
 
-            var authUserToken = BuildAuthenticatedUserToken(jwt);
+
+            //Since local storage does not expire, get the last login time. If the user hasn't logged in during the past 24 hours, force a logout. 
+            var decodedLastLoginTime = Base64Helper.Decode(localStorageModel.cs9s9w2kcks);
+            var now = DateTime.UtcNow;
+            DateTime dateResult;
+            DateTime.TryParse(decodedLastLoginTime, out dateResult);
+            var ts = now.Subtract(dateResult);
+            if (ts.TotalHours > 24)
+            {
+                await NotifyUserLogout();
+            }
+
+            var authUserToken = BuildAuthenticatedUserToken(localStorageModel.sdoj22sd0sld);
             return new AuthenticationState(authUserToken);
         }
 

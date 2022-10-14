@@ -45,6 +45,11 @@
             {
                 return $"/api/sandbox/businessruleexception";
             }
+
+            public static string DocumentUpload()
+            {
+                return $"/api/sandbox/documentupload";
+            }
         }
     }
 }

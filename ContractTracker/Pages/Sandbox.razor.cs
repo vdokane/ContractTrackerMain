@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ContractTracker.Authentication;
-using ContractTracker.ClientModels.LoginModels;
-using ContractTracker.ClientModels.Generic;
 using Radzen;
 using ContractTracker.Services;
 using ContractTracker.Common.ClientAndServerModels.User;
 using ContractTracker.Common.ClientAndServerModels.Exception;
+using Tewr.Blazor.FileReader;
+using System.Net.Http.Headers;
 
 namespace ContractTracker.Pages
 {
@@ -18,6 +17,16 @@ namespace ContractTracker.Pages
         [Inject]
         public NotificationService NotificationService { get; set; } = null!;
 
+        [Inject]
+        public IFileReaderService fileReaderService { get; set; } = null!;
+
+        protected ElementReference inputReference;
+        protected string message = string.Empty;
+        protected string fileName = string.Empty;
+        protected string type = string.Empty;
+        protected string size = string.Empty;
+        protected Stream fileStream = null;
+        protected ElementReference inputReferenceComplex;
 
         protected override async Task OnInitializedAsync()
         {
@@ -26,14 +35,11 @@ namespace ContractTracker.Pages
 
         protected async Task GetComplexModel()
         {
-            decimal dBug = -1;
             var model = await sandboxService.GetUserResponseModelNoParams();
-
         }
 
         protected async Task GetComplexModelWithParams()
         {
-            decimal dBug = -1;
             var responseModel = await sandboxService.GetComplexModelWithParams(7832, "UserNanme From Component");
             HandleResponseNotification(responseModel);
         }
@@ -62,6 +68,9 @@ namespace ContractTracker.Pages
 
         }
 
+
+        #region private methods
+
         private void HandleResponseNotification(BaseResponseModel baseResponse)
         {
             if (baseResponse == null)
@@ -88,7 +97,113 @@ namespace ContractTracker.Pages
             }
             NotificationService.Notify(notificationMessage);
         }
+        #endregion
 
+        #region document upload
+        protected async Task UploadFile()
+        {
+            if (fileStream == null)
+                return;
+
+            var content = new MultipartFormDataContent();
+
+            bool responsePass = true;
+            using (var streamContent = new StreamContent(fileStream, (int)fileStream.Length))
+            {
+                using (var fileContent = new ByteArrayContent(await streamContent.ReadAsByteArrayAsync()))
+                {
+                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = "formFile", // "formFile" parameter name should be the same as the server side input parameter name
+                        FileName = fileName
+                    };
+                    fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(type);
+                    content.Add(fileContent);
+                    responsePass = await sandboxService.DocumentUploadExample(content);
+                }
+            }
+
+            if (responsePass)
+                Console.WriteLine("Was success");
+            else
+                Console.WriteLine("IT ERRORED");
+
+
+            fileName = string.Empty;
+            type = string.Empty;
+            size = string.Empty;
+            var fileThatWasSelected = fileReaderService.CreateReference(inputReference);
+            await fileThatWasSelected.ClearValue();
+        }
+
+        protected async Task OpenFile()
+        {
+            var file = (await fileReaderService.CreateReference(inputReference).EnumerateFilesAsync()).FirstOrDefault();
+            if (file == null)
+            {
+                return;
+            }
+
+            var fileInfo = await file.ReadFileInfoAsync();
+            fileName = fileInfo.Name;
+            type = fileInfo.Type;
+            size = $"{fileInfo.Size} Bytes";
+
+            using (var ms = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
+            {
+                fileStream = new MemoryStream(ms.ToArray());
+            }
+        }
+
+        protected async Task OpenFile2()
+        {
+            var file = (await fileReaderService.CreateReference(inputReferenceComplex).EnumerateFilesAsync()).FirstOrDefault();
+            if (file == null)
+            {
+                return;
+            }
+
+            var fileInfo = await file.ReadFileInfoAsync();
+
+            using (var ms = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
+            {
+                fileStream = new MemoryStream(ms.ToArray());
+            }
+        }
+
+        protected async Task UploadFile2()
+        {
+            if (fileStream == null)
+                return;
+
+            //TODO this needs to be a property on request model along with ContractId
+            var content = new MultipartFormDataContent();
+
+            bool responsePass = true;
+            using (var streamContent = new StreamContent(fileStream, (int)fileStream.Length))
+            {
+                using (var fileContent = new ByteArrayContent(await streamContent.ReadAsByteArrayAsync()))
+                {
+                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = "formFile", // "formFile" parameter name should be the same as the server side input parameter name
+                        FileName = fileName
+                    };
+                    fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(type);
+                    content.Add(fileContent);
+                    //responsePass = await sandboxService.DocumentUploadExample(content);
+                }
+            }
+
+            if (responsePass)
+                Console.WriteLine("Was success");
+            else
+                Console.WriteLine("IT ERRORED");
+
+ 
+        }
+
+        #endregion
     }
 
 

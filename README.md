@@ -1,3 +1,11 @@
+# TODO  2022/10/07
+--VERY NEXT TO DO  The incoming data stream of length 723832 exceeds the maximum allowed length 512000. (Parameter 'maxAllowedSize')
+System.ArgumentOutOfRangeException: The incoming data stream of length 723832 exceeds the maximum allowed length 512000. (Parameter 'maxAllowedSize')
+--Build IFileUpload Service
+
+
+- Upload and download a document in Sanbox ..ugh https://stackoverflow.com/questions/62665194/blazor-webassembly-pwa-iformfile-fromform-is-always-null
+
 # TODO  2022/09/06
 - Redirect on lougout/force expire
 - Commit finally
@@ -28,3 +36,10 @@ TokenBuilder is in common so how do I want to store that for the web app? isDev(
 - CsvHelper <-- get the format files
 - Document managment :( 
 - ..and of course.. ui!
+
+
+# Notes About NuGets
+https://github.com/Tewr/BlazorFileReader/blob/main/src/Blazor.FileReader/Tewr.Blazor.FileReader.md
+
+Do not update any of the web assembly packages without update the .net core SDK or it will break everything
+C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App

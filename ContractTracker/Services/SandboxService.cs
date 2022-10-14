@@ -13,9 +13,9 @@ namespace ContractTracker.Services
         Task<UserResponseModel?> GetUserResponseModelNoParams();
         Task<UserResponseModel?> GetComplexModelWithParams(int userId, string userName);
         Task<UserResponseModel> PostExample(UserInsertRequestModel userInsertRequestModel);
-
         Task<UserResponseModel> InvokeKaboom();
         Task<UserResponseModel> InvokeBusinessRuleKaboom();
+        Task<bool> DocumentUploadExample(MultipartFormDataContent content);
     }
     public class SandboxService : ISandboxService
     {
@@ -58,23 +58,17 @@ namespace ContractTracker.Services
             }
 
         }
-        //abstract out the model url params and the return type for get and posts
-
-
         public async Task<UserResponseModel?> GetUserResponseModelNoParams()
         {
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.GetComplexModelApiUrl();
             return await ImBaseGetMethod<UserResponseModel>(route);
         }
-
         public async Task<UserResponseModel?> GetComplexModelWithParams(int userId, string userName)
         {
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.GetComplexModelWithParamsApiUrl(userId, userName);
             return await ImBaseGetMethod<UserResponseModel>(route);
 
         }
-
-        //Hm? What generic response should these return??
         public async Task PostExample_THISWORKS(UserInsertRequestModel userInsertRequestModel)
         {
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.PostObjectApiUrl();
@@ -94,12 +88,8 @@ namespace ContractTracker.Services
                 var tst = await httpResponseMessage.Content.ReadAsStringAsync();
                 if (tst != null)
                 {
-                    //StreamReader reader = new StreamReader(tst);
-                    //string text = reader.ReadToEnd();
                     var userReponseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResponseModel>(tst);
                 }
-                //..todo get the response model out of this... 
-                //httpResponseMessage. 
             }
             catch (Exception ex)
             {
@@ -127,6 +117,14 @@ namespace ContractTracker.Services
             return await ImBaseGetMethod<UserResponseModel>(route);
         }
 
+        public async Task<bool> DocumentUploadExample(MultipartFormDataContent content)
+        {
+            var route = baseUrlForApiSite + ServiceRoutes.Sandbox.DocumentUpload();
+            var response = await httpClient.PostAsync(route, content);
+            return response.IsSuccessStatusCode;
+        }
+
+        #region private methods
         private async Task<T> ImBaseGetMethod<T>(string route)
         {
             //Nope, this screws up everyting... route = Uri.EscapeDataString(route);
@@ -254,24 +252,8 @@ namespace ContractTracker.Services
 
         }
 
-        /*
-        private DeprecatedBaseExceptionModel HandleBusinessRuleException<T>(HttpContent content)
-        {
-            var payload = content.ReadAsStream();
-
-            if (payload == null)
-                return default;
-
-            using (StreamReader reader = new StreamReader(payload))
-            {
-                var response = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<DeprecatedBaseExceptionModel>(response);
-            }
-        } */
+        #endregion
 
     }
-
-   
-
 
 }

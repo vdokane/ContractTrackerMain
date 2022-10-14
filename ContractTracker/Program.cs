@@ -5,6 +5,7 @@ using ContractTracker.Authentication;
 using Blazored.LocalStorage;
 using Radzen;
 using Microsoft.Extensions.Configuration.Memory;
+using Tewr.Blazor.FileReader;
 
 namespace ContractTracker
 {
@@ -19,6 +20,7 @@ namespace ContractTracker
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore(); //Part of NuGet Microsoft.AspNetCore.Components.Authorization;
+            builder.Services.AddFileReaderService(options => { options.UseWasmSharedBuffer = true; });  //For Tewr.Blazor.FileReader;
             builder.Services.AddScoped<AuthenticationStateProvider, TrackerAuthenticationStateProvider>();
             
             //Client services
@@ -33,6 +35,7 @@ namespace ContractTracker
           
             //Do not store these in any setting or json file, the client will see them. Set them in memory for safe keeping!!
             //NOTE: The client will not be making any direct DB calls so there is no need for a db connection string anywhere!
+            //Also note: They are designed to look like entropy so it might be a good idea to update these every release or so
             var appsettings = new Dictionary<string, string>()
             {
                 { "LocalStorageKeyForAuthUserModel", "12sad20d0s-23-ds-@ad-2sdsod8" },

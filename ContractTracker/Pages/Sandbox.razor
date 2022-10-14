@@ -6,38 +6,98 @@
 
 <div class="row form-row">
     <div class="col-md-12">
-        <input type="button" value="Get Complex Object" @onclick="GetComplexModel" class="btn btn-primary" />
+        <div class="card">
+            <div class="card-body">
+                <input type="button" value="Get Complex Object" @onclick="GetComplexModel" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row form-row">
+<div class="row form-row mt-3">
     <div class="col-md-12">
-        <input type="button" value="Get Complex Object With Params" @onclick="GetComplexModelWithParams" class="btn btn-primary" />
-    </div>
-</div>
-
-
-<div class="row form-row">
-    <div class="col-md-12">
-        <input type="button" value="Post Object" @onclick="PostObject" class="btn btn-outline-secondary" />
-    </div>
-</div>
-
-<div class="row form-row">
-    <div class="col-md-12">
-        <input type="button" value="Go Kaboom" @onclick="InvokeKaboom" class="btn btn-outline-secondary" />
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-12">
-        <div class="form-group">
-             <label for="business-rule-kaboom">Throw a Forced Business Rule Exception</label><br/>
-             <input type="button" id="business-rule-kaboom" value="Business Rule Kaboom" @onclick="InvokeBusinessRuleKaboom" class="btn btn-outline-secondary" />
-             <small   class="form-text text-muted">Should return a 400 back to the client, not a 500.</small>
+        <div class="card">
+            <div class="card-body">
+                <input type="button" value="Get Complex Object With Params" @onclick="GetComplexModelWithParams" class="btn btn-primary" />
+            </div>
         </div>
     </div>
 </div>
 
 
- 
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="button" value="Post Object" @onclick="PostObject" class="btn btn-outline-secondary" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="button" value="Go Kaboom" @onclick="InvokeKaboom" class="btn btn-outline-secondary" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="business-rule-kaboom">Throw a Forced Business Rule Exception</label><br />
+                    <input type="button" id="business-rule-kaboom" value="Business Rule Kaboom" @onclick="InvokeBusinessRuleKaboom" class="btn btn-outline-secondary" />
+                    <small class="form-text text-muted">Should return a 400 back to the client, not a 500.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="upload-document">Upload Document</label><br />
+                    <input type="file" id="upload-document"   @ref="inputReference" @onchange="async() =>await OpenFile()" class="btn btn-outline-secondary" />
+                    <small class="form-text text-muted">Will currently save to file system but need to set up DB</small>
+                    <ul>
+                        <li>File Name: @fileName</li>
+                        <li>Size: @size</li>
+                        <li>Type: @type</li>
+                    </ul>
+                    <div>
+                        <button class="btn btn-block btn-success" @onclick="async() =>await UploadFile()"> Upload File</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="upload-document">Upload Document With Complex Request Model</label><br />
+                    <input type="file" id="upload-document2"  @ref="inputReferenceComplex" @onchange="async() =>await OpenFile2()" class="btn btn-outline-secondary" />
+                    <input type="button" value="Clear attachment - todo" />
+                    <small class="form-text text-muted">This will send an IFormFile as well as the parent Id with the request</small>
+                    <div>
+                        <button class="btn btn-block btn-success" @onclick="async() =>await UploadFile2()">Add Contract Attachment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

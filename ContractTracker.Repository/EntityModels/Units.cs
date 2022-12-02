@@ -6,10 +6,10 @@ namespace ContractTracker.Repository.EntityModels
     {
         [Key]
         public int UnitId { get; set; }
-        public string Bureau { get; set; }
-        public string SectionDesc { get; set; }
-        public string Section { get; set; }
-        public string UnitCode { get; set; }
+        public string Bureau { get; set; } = string.Empty;
+        public string SectionDesc { get; set; } = string.Empty;
+        public string Section { get; set; } = string.Empty;
+        public string UnitCode { get; set; } = string.Empty;
         public bool? AllUsersCanSubmit { get; set; }
         public bool? PurchaseRequiresSpecialRouting { get; set; }
     }

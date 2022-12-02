@@ -68,19 +68,7 @@ namespace ContractTracker.Authentication
         }
 
         #region private methods
-        /*
-        private ClaimsPrincipal BuildAuthenticatedUser(AuthorizedUserModel authorizedUserModel)
-        {
-            var claimsIdentity = new ClaimsIdentity(null, "Basic");
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, authorizedUserModel.Email));
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, authorizedUserModel.Role));
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, authorizedUserModel.UserName));
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, authorizedUserModel.UserId.ToString()));
-
-            var authenticatedUser = new ClaimsPrincipal(claimsIdentity);
-            return authenticatedUser;
-        }
-        */
+       
         private ClaimsPrincipal BuildAuthenticatedUserToken(string token)
         {
 

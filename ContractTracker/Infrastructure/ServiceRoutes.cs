@@ -50,6 +50,25 @@
             {
                 return $"/api/sandbox/documentupload";
             }
+            public static string DocumentUploadComplexObject()
+            {
+                return $"/api/sandbox/documentuploadcomplexobject";
+            }
+
+            public static string GetContractAttachmentById()
+            {
+                return $"/api/sandbox/getcontractattachmentbyid";
+            }
+
+             
+        }
+
+        internal class Logging
+        {
+            public static string GetSaveClientErrorUrl()
+            {
+                return $"/api/logging/saveclienterror";
+            }
         }
     }
 }

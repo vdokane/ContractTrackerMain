@@ -26,13 +26,11 @@ namespace ContractTracker.Common.Functionality
         }
         public string BuildToken(CommonAuthenticatedUserModel commonAuthenticatedUserModel)
         {
-
             //Set issued at date
             DateTime issuedAt = DateTime.UtcNow;
             //set the time when it expires
             DateTime expires = DateTime.UtcNow.AddDays(7);
 
-            //http://stackoverflow.com/questions/18223868/how-to-encrypt-jwt-security-token
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
             //create a identity and add claims to the user which we want to log in
@@ -58,15 +56,9 @@ namespace ContractTracker.Common.Functionality
 
         public void ParseToken(string strJWTToken)
         {
-
-            //JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(strJWTToken);
-
             byte[] key = System.Text.Encoding.Default.GetBytes(_sec);
-
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-
             JwtSecurityToken securityToken = handler.ReadJwtToken(strJWTToken); //Might want to put this in a try catch to make sure they aren't sending in junk
-
 
             SecurityToken tokenSecure = handler.ReadToken(strJWTToken);
             TokenValidationParameters validations = new TokenValidationParameters
@@ -78,14 +70,17 @@ namespace ContractTracker.Common.Functionality
             };
 
             ClaimsPrincipal claims = handler.ValidateToken(strJWTToken, validations, out tokenSecure);
-            var test = claims.Identity.Name;
-            var test2 = claims.Identities; //It is all buried down in here
-            //Still need to clean this up
-            foreach (Claim claim in claims.Claims)
+            if (claims != null)
             {
-                string tst = claim.Type;
-                string tst2 = claim.Subject.Name;
-                string tst3 = claim.Subject.NameClaimType;
+                var test = claims?.Identity?.Name;
+                var test2 = claims?.Identities; //It is all buried down in here
+                                               //Still need to clean this up
+                foreach (Claim claim in claims.Claims)
+                {
+                    string tst = claim.Type;
+                    string tst2 = claim.Subject?.Name;
+                    string tst3 = claim.Subject?.NameClaimType;
+                }
             }
 
         }
@@ -117,8 +112,6 @@ namespace ContractTracker.Common.Functionality
                 {
                     var shouldBeName = claim.Value;
                 }
-                //string tst2 = claim.Subject.Name;
-                //string tst3 = claim.Subject.NameClaimType;
             }
             //I could return a userModel here with the claims
             //I could return some of these claims to store in session storage or should the whole JWT get saved

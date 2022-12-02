@@ -2,11 +2,11 @@
 
 namespace ContractTracker.Repository.EntityModels
 {
-    public class PersonTypes
+    public class ContractUserTypes
     {
         [Key]
-        public int PersonTypeId { get; set; }
-        public string PersonTypeDescription { get; set; }
+        public int ContractUserTypeId { get; set; }
+        public string UserTypeDescription { get; set; } = string.Empty;
         public int IsActive { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -17,6 +17,16 @@
     <ProjectReference Include="..\ContractTracker.Common\ContractTracker.Common.csproj" />
     <ProjectReference Include="..\ContractTracker.Services.Authentication\ContractTracker.Services.Authentication.csproj" />
     <ProjectReference Include="..\ContractTracker.Services.Business\ContractTracker.Services.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Content\SampleTextFileForApiResponse.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

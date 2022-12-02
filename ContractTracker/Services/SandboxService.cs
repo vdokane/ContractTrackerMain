@@ -1,10 +1,10 @@
 ﻿using ContractTracker.Common.ClientAndServerModels.User;
 using Newtonsoft.Json;
 using ContractTracker.Infrastructure;
-using ContractTracker.Authentication;
 using Blazored.LocalStorage;
 using System.Text;
 using System.Net;
+using ContractTracker.ClientModels.DocumentUploadModels;
 
 namespace ContractTracker.Services
 {
@@ -16,32 +16,21 @@ namespace ContractTracker.Services
         Task<UserResponseModel> InvokeKaboom();
         Task<UserResponseModel> InvokeBusinessRuleKaboom();
         Task<bool> DocumentUploadExample(MultipartFormDataContent content);
+        Task<bool> ComplexDocumentUploadExample(ContractDocumentApiRequestModel requestModel);
+        Task<Stream> GetContractAttachmentById(int contractAttachmentId);
     }
-    public class SandboxService : ISandboxService
+    public class SandboxService : ServiceBase, ISandboxService
     {
-        protected readonly HttpClient httpClient;
-        private readonly IConfiguration configuration;
-        protected readonly string baseUrlForApiSite;
-        private readonly ILocalStorageService localStorage;
-
-        public SandboxService(HttpClient httpClient, IConfiguration configuration, ILocalStorageService localStorage)
+        
+        public SandboxService(HttpClient httpClient, IConfiguration configuration, ILocalStorageService localStorage) : base(httpClient, configuration, localStorage)
         {
-            this.httpClient = httpClient;
-            this.configuration = configuration;
-            baseUrlForApiSite = configuration.GetValue<string>("BaseUrlApi");
-            this.localStorage = localStorage;
         }
 
         public async Task<UserResponseModel?> GetUserResponseModelNoParams_THISWORKS()
         {
             try
             {
-                var authConstants = new AuthConstants(configuration);
-                var localStorageKey = authConstants.LocalStorageKeyForJwt;
-                var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-
-                //got to be a better way than manually setting it... damn, this will go in new base, private method here
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
+                await SetJwtAuthHeader();
 
                 var route = baseUrlForApiSite + ServiceRoutes.Sandbox.GetComplexModelApiUrl();
                 var response = await httpClient.GetStringAsync(route);
@@ -74,13 +63,7 @@ namespace ContractTracker.Services
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.PostObjectApiUrl();
             try
             {
-                var authConstants = new AuthConstants(configuration);
-                var localStorageKey = authConstants.LocalStorageKeyForJwt;
-                var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-
-                //got to be a better way than manually setting it... damn, this will go in new base, private method here
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
-
+                await SetJwtAuthHeader();
                 string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(userInsertRequestModel);
                 StringContent stringContent = new StringContent(serialized, Encoding.UTF8, "application/json");
 
@@ -94,6 +77,7 @@ namespace ContractTracker.Services
             catch (Exception ex)
             {
                 string dbug = ex.ToString();
+                Console.WriteLine(dbug);
             }
         }
 
@@ -113,16 +97,58 @@ namespace ContractTracker.Services
         public async Task<UserResponseModel> InvokeBusinessRuleKaboom()
         {
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.KaboomBusinessRuleApiUrl();
-            var dummy = new UserInsertRequestModel();
             return await ImBaseGetMethod<UserResponseModel>(route);
         }
 
         public async Task<bool> DocumentUploadExample(MultipartFormDataContent content)
         {
+            await SetJwtAuthHeader();
             var route = baseUrlForApiSite + ServiceRoutes.Sandbox.DocumentUpload();
             var response = await httpClient.PostAsync(route, content);
             return response.IsSuccessStatusCode;
         }
+
+        //For complex objects that include IForm, you must use SendAsync:
+        //https://brokul.dev/sending-files-and-additional-data-using-httpclient-in-net-core
+        public async Task<bool> ComplexDocumentUploadExample(ContractDocumentApiRequestModel requestModel)
+        {
+            await SetJwtAuthHeader();
+
+            var route = baseUrlForApiSite + ServiceRoutes.Sandbox.DocumentUploadComplexObject();
+            using var request = new HttpRequestMessage(HttpMethod.Post, route);
+            using var content = new MultipartFormDataContent
+            {
+                { new StreamContent(requestModel.ContractDocumentFormFile), "ContractDocumentFormFile", requestModel.FileName },
+                { new StringContent(requestModel.ContractId.ToString()), "ContractId" },
+                { new StringContent(requestModel.ContractDocumentTypeId.ToString()), "ContractDocumentTypeId" },
+            };
+            request.Content = content;
+            var anyResponse = await httpClient.SendAsync(request);
+            return anyResponse.IsSuccessStatusCode;
+        }
+
+        public async Task<Stream> GetContractAttachmentById(int contractAttachmentId)
+        {
+            await SetJwtAuthHeader();
+
+            var route = baseUrlForApiSite + ServiceRoutes.Sandbox.GetContractAttachmentById();
+            await SetJwtAuthHeader();
+            var responseTEST = await httpClient.GetAsync(route);
+            var stream = responseTEST.Content.ReadAsStream(); //So how do I get the name out of this
+
+            /* testing 
+            using (StreamReader reader = new StreamReader(responseTEST.Content.ReadAsStream()))
+            {
+                var response = reader.ReadToEnd();
+                Console.WriteLine(response);
+
+            }  */
+
+            return stream;
+            
+            
+        }
+
 
         #region private methods
         private async Task<T> ImBaseGetMethod<T>(string route)
@@ -132,15 +158,10 @@ namespace ContractTracker.Services
             string tst = string.Empty;
             try
             {
-                var authConstants = new AuthConstants(configuration);
-                var localStorageKey = authConstants.LocalStorageKeyForJwt;
-                var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
+                await SetJwtAuthHeader();
 
-                //got to be a better way than manually setting it... damn, this will go in new base, private method here
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
+                var responseTEST = await httpClient.GetAsync(route);  
 
-                var responseTEST = await httpClient.GetAsync(route); //This might be the way
-                
 
                 var payload = responseTEST.Content.ReadAsStream();
 
@@ -165,25 +186,9 @@ namespace ContractTracker.Services
 
         private async Task<T> ImBasePostMethod<T>(string route, object postObject)
         {
-
             try
             {
-                var authConstants = new AuthConstants(configuration);
-                var localStorageKey = authConstants.LocalStorageKeyForJwt;
-                var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-
-                //got to be a better way than manually setting it... damn, this will go in new base, private method here
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
-
-                /* looks the same
-                var authConstants = new AuthConstants(configuration);
-                var localStorageKey = authConstants.LocalStorageKeyForJwt;
-                var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-
-                //got to be a better way than manually setting it... damn
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
-                */
-
+                await SetJwtAuthHeader();
 
                 string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(postObject);
                 StringContent stringContent = new StringContent(serialized, Encoding.UTF8, "application/json");
@@ -191,10 +196,8 @@ namespace ContractTracker.Services
                 var httpResponseMessage = await httpClient.PostAsync(route, stringContent);
                 if (!httpResponseMessage.IsSuccessStatusCode)
                 {
-                    //TODO process error message
                     if (httpResponseMessage.StatusCode == HttpStatusCode.InternalServerError)
                     {
-                        //So how do I tell beween a regular exception and a business rule exception?
                         var tmp = await httpResponseMessage.Content.ReadAsStringAsync();
 
                     }
@@ -207,8 +210,6 @@ namespace ContractTracker.Services
 
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(tst);
 
-                //..todo get the response model out of this... 
-                //httpResponseMessage. 
             }
             catch (Exception ex)
             {
@@ -227,15 +228,7 @@ namespace ContractTracker.Services
         private async Task<T> ImBasePostMethodWithNoCatch<T>(string route, object postObject)
         {
 
-            var authConstants = new AuthConstants(configuration);
-            var localStorageKey = authConstants.LocalStorageKeyForJwt;
-            var jwt = await localStorage.GetItemAsync<string>(localStorageKey);
-
-            //got to be a better way than manually setting it... damn, this will go in new base, private method here
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
-
-
-
+            await SetJwtAuthHeader();
 
             string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(postObject);
             StringContent stringContent = new StringContent(serialized, Encoding.UTF8, "application/json");
@@ -247,9 +240,6 @@ namespace ContractTracker.Services
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(tst);
 
-            //..todo get the response model out of this... 
-            //httpResponseMessage. 
-
         }
 
         #endregion
@@ -257,3 +247,4 @@ namespace ContractTracker.Services
     }
 
 }
+

@@ -3,7 +3,6 @@ using ContractTracker.Authentication.Models;
 using ContractTracker.Common.Helpers;
 using ContractTracker.Infrastructure;
 using System.Net.Http.Json;
-using System.Text;
 
 namespace ContractTracker.Authentication
 {

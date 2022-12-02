@@ -30,12 +30,6 @@
 	[PhoneNumberSuffix] [varchar](255) NULL,
 	[DateLastUsed] [varchar](255) NULL,
 	[VendorEnterIndicator] [varchar](255) NULL,
-	[AddUserIdentifier] [varchar](255) NULL,
-	[AddDate] [varchar](255) NULL,
-	[AddOperatingLevelOrganization] [varchar](255) NULL,
-	[UpdateUserIdentifier] [varchar](255) NULL,
-	[UpdateDate] [varchar](255) NULL,
-	[UpdateOperatingLevelOrganization] [varchar](255) NULL,
 	[W9Indicator] [varchar](255) NULL,
 	[InactiveReasonCode] [varchar](255) NULL,
 	[PersonalIdentificationNumber] [varchar](255) NULL,
@@ -47,7 +41,12 @@
 	[ForeignIndicator] [varchar](255) NULL,
 	[EFTAuthorizationIndicator] [varchar](255) NULL,
 	--todo better audit fields
-	[UserId] [int] NULL,
-	[InsertDate] [datetime] NULL,
+	[AddUserIdentifier] [varchar](255) NULL,
+	[AddDate] [varchar](255) NULL,
+	[AddOperatingLevelOrganization] [varchar](255) NULL,
+	[UpdateOperatingLevelOrganization] [varchar](255) NULL,
+	[UpdateUserIdentifier] [varchar](255) NULL,
+	[UpdateDate] [datetime] NULL
+
 	CONSTRAINT [PK_Vendors] PRIMARY KEY CLUSTERED ([VendorId] ASC)
 )

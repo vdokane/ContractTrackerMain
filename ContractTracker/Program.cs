@@ -28,7 +28,8 @@ namespace ContractTracker
             builder.Services.AddScoped<Services.IUserService, Services.UserService>();
             builder.Services.AddScoped<Services.IVendorService, Services.VendorService>();
             builder.Services.AddScoped<Services.ISandboxService, Services.SandboxService>();
-             
+            builder.Services.AddScoped<Services.ILogginService, Services.LogginService>();
+
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<NotificationService>(); //For toasts

@@ -1,0 +1,22 @@
+This is a sample text file. It will be in the instructions folder so if I want to run unit tests on documents I can.
+ 
+ 
+
+284206
+
+284205 = 2021
+
+This is the filer for 2021
+https://localhost:44332/Filer/Edit/827735
+
+
+Add
+John vdotest Biggers
+https://localhost:44332/Organization/Filers?organizationId=284206
+
+ 
+ What gets them on this list?
+https://localhost:44332/Organization/OfficialListSearch
+ 
+ 
+ 

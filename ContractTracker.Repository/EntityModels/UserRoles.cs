@@ -6,6 +6,6 @@ namespace ContractTracker.Repository.EntityModels
     {
         [Key]
         public int UserRoleId { get; set; }
-        public string UserRoleDescription { get; set; }
+        public string UserRoleDescription { get; set; } = string.Empty;
     }
 }

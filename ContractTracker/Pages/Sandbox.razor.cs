@@ -5,6 +5,8 @@ using ContractTracker.Common.ClientAndServerModels.User;
 using ContractTracker.Common.ClientAndServerModels.Exception;
 using Tewr.Blazor.FileReader;
 using System.Net.Http.Headers;
+using ContractTracker.ClientModels.DocumentUploadModels;
+using Microsoft.JSInterop;
 
 namespace ContractTracker.Pages
 {
@@ -12,21 +14,37 @@ namespace ContractTracker.Pages
     {
         [Inject]
         public ISandboxService sandboxService { get; set; } = null!;
+        [Inject]
+        public ILogginService logginService { get; set; } = null!;
 
+        [Inject]
+        public ILoggerFactory LoggerFactory { get; set; } = null!;
 
         [Inject]
         public NotificationService NotificationService { get; set; } = null!;
 
         [Inject]
         public IFileReaderService fileReaderService { get; set; } = null!;
+        
+        [Inject]
+        public IJSRuntime JS { get; set; } = null!;
+
+        [Inject]
+        public NavigationManager navManager { get; set; } = default!;
 
         protected ElementReference inputReference;
         protected string message = string.Empty;
         protected string fileName = string.Empty;
         protected string type = string.Empty;
         protected string size = string.Empty;
-        protected Stream fileStream = null;
+        protected Stream fileStream = null!;
+        
         protected ElementReference inputReferenceComplex;
+        protected string fileName2 = string.Empty;
+        protected string type2 = string.Empty;
+        protected string size2 = string.Empty;
+        protected Stream fileStream2 = null!;
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -51,6 +69,9 @@ namespace ContractTracker.Pages
             HandleResponseNotification(responseModel);
         }
 
+
+
+        #region Kaboom
         protected async Task InvokeKaboom()
         {
             //So how do I capture the response? And tell the difference between a regular exception and a business rule exception?
@@ -68,6 +89,21 @@ namespace ContractTracker.Pages
 
         }
 
+        protected async Task ClientKaboom()
+        {
+            var logger = LoggerFactory.CreateLogger<Sandbox>();
+            
+            try
+            {
+                throw new Exception("Kaboom!");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.ToString());
+                await logginService.SaveClientError(navManager.Uri, ex);
+            }
+        }
+        #endregion
 
         #region private methods
 
@@ -164,37 +200,33 @@ namespace ContractTracker.Pages
             }
 
             var fileInfo = await file.ReadFileInfoAsync();
+            fileName2 = fileInfo.Name;
+            type2 = fileInfo.Type;
+            size2 = $"{fileInfo.Size} Bytes";
 
             using (var ms = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
             {
-                fileStream = new MemoryStream(ms.ToArray());
+                fileStream2 = new MemoryStream(ms.ToArray());
             }
         }
 
         protected async Task UploadFile2()
         {
-            if (fileStream == null)
+            if (fileStream2 == null)
                 return;
 
-            //TODO this needs to be a property on request model along with ContractId
-            var content = new MultipartFormDataContent();
+
+            //TODO 10/20
+            var request = new ContractDocumentApiRequestModel();
+            request.ContractDocumentTypeId = 14;
+            request.ContractId = 34;
+            request.FileName = fileName2;
+            request.ContractDocumentFormFile = fileStream2;
 
             bool responsePass = true;
-            using (var streamContent = new StreamContent(fileStream, (int)fileStream.Length))
-            {
-                using (var fileContent = new ByteArrayContent(await streamContent.ReadAsByteArrayAsync()))
-                {
-                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                    {
-                        Name = "formFile", // "formFile" parameter name should be the same as the server side input parameter name
-                        FileName = fileName
-                    };
-                    fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(type);
-                    content.Add(fileContent);
-                    //responsePass = await sandboxService.DocumentUploadExample(content);
-                }
-            }
-
+            responsePass = await sandboxService.ComplexDocumentUploadExample(request);
+          
+          
             if (responsePass)
                 Console.WriteLine("Was success");
             else
@@ -203,6 +235,17 @@ namespace ContractTracker.Pages
  
         }
 
+        #endregion
+
+        #region document download 
+        /* this did NOT work
+        protected async Task GetContractAttachment()
+        {
+            var stream = await sandboxService.GetContractAttachmentById(99);
+            //using var streamRef = DotNetStreamReference(stream: fileStream);
+
+            await JS.InvokeVoidAsync("downloadFileFromStream", "test.txt", stream);
+        } */
         #endregion
     }
 

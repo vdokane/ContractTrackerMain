@@ -15,4 +15,4 @@ Post-Deployment Script Template
 :r .\Seed\Seed.TrackingSteps.sql
 :r .\Seed\Seed.Units.sql
 :r .\Seed\Seed.AttachmentTypes.sql
-:r .\Seed\Seed.PersonTypes.sql
+:r .\Seed\Seed.ContractUserTypes.sql

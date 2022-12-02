@@ -6,6 +6,6 @@ namespace ContractTracker.Repository.EntityModels
     {
         [Key]
         public int MethodOfPaymentId { get; set; }
-        public string PaymentDescription { get; set; }
+        public string PaymentDescription { get; set; } = string.Empty;
     }
 }

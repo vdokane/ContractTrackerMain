@@ -11,11 +11,11 @@ namespace ContractTracker.Repository.EntityModels
 
         [ForeignKey("UserRoleId")]
         public int UserRoleId { get; set; }
-        public UserRoles UserRoles { get; set; }
-        public string UserLogInName { get; set; }
-        public string UserName { get; set; }
-        public string UserEmail { get; set; }
-        public string PositionTitle { get; set; }
+        public UserRoles UserRoles { get; set; } = null!;
+        public string UserLogInName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = string.Empty;
+        public string PositionTitle { get; set; } = string.Empty;
         public DateTime? AddDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int CreatedByUserId { get; set; }

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContractTracker.Services.Business.Services
 {
-    public interface IApplicationSettingsService { }
-    public class ApplicationSettingsService : IApplicationSettingsService
+    internal class AmmendmentAttachment
     {
     }
 }

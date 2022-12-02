@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0C9FD96-B28C-4BA1-B32D-DB883CF7F198}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		TODO.md = TODO.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Export.Test", "ContractTracker.Export.Test\ContractTracker.Export.Test.csproj", "{946DBCEC-1C5E-4707-9269-00E1E87AD0F1}"

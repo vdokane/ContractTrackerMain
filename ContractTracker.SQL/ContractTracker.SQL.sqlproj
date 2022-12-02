@@ -68,15 +68,14 @@
     <Build Include="Tables\Announcements.sql" />
     <Build Include="Tables\AttachmentTypes.sql" />
     <Build Include="Tables\Budgets.sql" />
-    <Build Include="Tables\ContractPersons.sql" />
+    <Build Include="Tables\ContractUsers.sql" />
     <Build Include="Tables\Contracts.sql" />
     <Build Include="Tables\ContractTypes.sql" />
     <Build Include="Tables\Deliverables.sql" />
     <Build Include="Tables\ErrorLog.sql" />
     <Build Include="Tables\FlairCodes.sql" />
     <Build Include="Tables\MethodOfPayments.sql" />
-    <Build Include="Tables\Persons.sql" />
-    <Build Include="Tables\PersonTypes.sql" />
+    <Build Include="Tables\ContractUserTypes.sql" />
     <Build Include="Tables\ProcurementMethods.sql" />
     <Build Include="Tables\Reports.sql" />
     <Build Include="Tables\TrackingHistory.sql" />
@@ -88,12 +87,13 @@
     <None Include="Seed\Seed.AttachmentTypes.sql" />
     <None Include="Seed\Seed.ContractTypes.sql" />
     <None Include="Seed\Seed.MethodOfPayments.sql" />
-    <None Include="Seed\Seed.PersonTypes.sql" />
+    <None Include="Seed\Seed.ContractUserTypes.sql" />
     <None Include="Seed\Seed.ProcurementMethods.sql" />
     <None Include="Seed\Seed.TrackingSteps.sql" />
     <None Include="Seed\Seed.Units.sql" />
     <Build Include="Tables\ApplicationSettings.sql" />
     <Build Include="Tables\UserUnits.sql" />
+    <Build Include="Tables\ApplicationErrorLogs.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ContractTracker.SQL.Local.publish.xml" />

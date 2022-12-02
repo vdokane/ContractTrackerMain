@@ -25,11 +25,15 @@
 
   <ItemGroup>
     <Folder Include="ClientModels\UserModels\" />
+    <Folder Include="wwwroot\Instructions\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Instructions\SampleTextFile.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

@@ -39,7 +39,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <input type="button" value="Go Kaboom" @onclick="InvokeKaboom" class="btn btn-outline-secondary" />
+                <input type="button" value="Go Kaboom" @onclick="InvokeKaboom" class="btn bnt-outline-danger" />
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="business-rule-kaboom">Throw a Forced Business Rule Exception</label><br />
-                    <input type="button" id="business-rule-kaboom" value="Business Rule Kaboom" @onclick="InvokeBusinessRuleKaboom" class="btn btn-outline-secondary" />
+                    <input type="button" id="business-rule-kaboom" value="Business Rule Kaboom" @onclick="InvokeBusinessRuleKaboom" class="btn btn-outline-danger" />
                     <small class="form-text text-muted">Should return a 400 back to the client, not a 500.</small>
                 </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="upload-document">Upload Document</label><br />
-                    <input type="file" id="upload-document"   @ref="inputReference" @onchange="async() =>await OpenFile()" class="btn btn-outline-secondary" />
+                    <input type="file" id="upload-document" @ref="inputReference" @onchange="async() =>await OpenFile()" class="btn btn-outline-secondary" />
                     <small class="form-text text-muted">Will currently save to file system but need to set up DB</small>
                     <ul>
                         <li>File Name: @fileName</li>
@@ -88,9 +88,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="upload-document">Upload Document With Complex Request Model</label><br />
-                    <input type="file" id="upload-document2"  @ref="inputReferenceComplex" @onchange="async() =>await OpenFile2()" class="btn btn-outline-secondary" />
+                    <input type="file" id="upload-document2" @ref="inputReferenceComplex" @onchange="async() =>await OpenFile2()" class="btn btn-outline-secondary" />
                     <input type="button" value="Clear attachment - todo" />
-                    <small class="form-text text-muted">This will send an IFormFile as well as the parent Id with the request</small>
+                    <small class="form-text text-muted">This will send an IFormFile as well as the parent Id and document type id with the request</small>
+                    <ul>
+                        <li>File Name: @fileName2</li>
+                        <li>Size: @size2</li>
+                        <li>Type: @type2</li>
+                    </ul>
                     <div>
                         <button class="btn btn-block btn-success" @onclick="async() =>await UploadFile2()">Add Contract Attachment</button>
                     </div>
@@ -100,4 +105,34 @@
     </div>
 </div>
 
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    
+                    <a href="http://localhost:25940/api/sandbox/getcontractattachmentbyid?contractAttachmentId=11">Download from anchor</a>
+                    <small class="form-text text-muted">This will get a document in the bin of the working directory and flush it back to the client</small>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row form-row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="client-kaboom">Throw an exception in the client</label><br />
+                    <input type="button" id="client-kaboom" value="Client Kaboom" @onclick="ClientKaboom" class="btn btn-danger" />
+                    <small class="form-text text-muted">TODO Force an except in Blazor and see if the error boundries can save to an error log</small>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

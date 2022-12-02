@@ -1,8 +1,9 @@
-﻿using ContractTracker.Repository.Interfaces;
+﻿using ContractTracker.Repository.DocumentHelpers;
+using ContractTracker.Repository.Interfaces;
 using ContractTracker.Repository.MockQueryRepositories;
 using ContractTracker.Repository.QueryRepositories;
 using ContractTracker.Services.Business.Services;
-
+using ContractTracker.Services.Business.ApplicationServices;
 
 namespace ContractTracker.Services.Business.Factories
 {
@@ -20,15 +21,8 @@ namespace ContractTracker.Services.Business.Factories
             return new AnnouncementService(repo);
         }
         
-        //todo build repo 
-        public IApplicationSettingsService BuidApplicationSettingsService()
-        {
-            return new ApplicationSettingsService();
-        }
-
         public IContractService BuidContractService()
         {
-            //todo, fix misspelling
             IContractQueryRepository contractQueryRepository = new ContractQueryRepository(unitOfWork);
             return new ContractService(contractQueryRepository);
         }
@@ -52,6 +46,44 @@ namespace ContractTracker.Services.Business.Factories
 
             return new UserService(userQueryRepository, userUnitQueryRepository);
         }
-             
+
+        public IContractAttachmentService BuildContractDocumentService(bool useMock)
+        {
+            IContractAttachmentQueryRepository repo;
+            if(useMock)
+            {
+                FileSystemRepository fileSystemRepository = new FileSystemRepository();
+                repo = new MockContractAttachmentQueryRepository(fileSystemRepository);
+            }
+            else
+            {
+                repo = new ContractAttachmentQueryRepository(unitOfWork);
+            }
+            return new ContractAttachmentService(repo);
+        }
+
+       
+
+        #region application services
+        public IApplicationErrorService BuildApplicationErrorService()
+        {
+            return new ApplicationErrorService();
+        }
+
+        //TODO, do I want to write to the file system log if db is down? How will that act in a cloud instance or container?
+        //TODO2, am I building uneeded stuff here? I mean, what else do I log, can error do the same?
+        public IApplicationLoggingService BuildLoggingService()
+        {
+            var loggingService = new ApplicationLoggingService();
+            return loggingService;
+        }
+
+        //todo build repo 
+        public IApplicationSettingsService BuidApplicationSettingsService()
+        {
+            return new ApplicationSettingsService();
+        }
+
+        #endregion
     }
 }

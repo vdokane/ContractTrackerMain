@@ -31,14 +31,21 @@ namespace ContractTracker.API.Middleware
         private static Task HandleException(HttpContext context, Exception ex)
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
-
+            string result = string.Empty;
             if (ex is BusinessRuleException)
             {
                 code = HttpStatusCode.BadRequest;
+                var newErr = (BusinessRuleException)ex;
+                result = JsonConvert.SerializeObject(new { isBusinessException = true, messages = newErr.ValidationMessages.ToArray() });
+            }
+            else //Some other exception
+            {
+                result = JsonConvert.SerializeObject(new { isBusinessException = false, messages = "An unexpected error occurred" });
+                var userName = context.User.Identity?.Name;
+                //TODO inject/build service to handle this
             }
 
-            var newErr = (BusinessRuleException)ex;
-            var result = JsonConvert.SerializeObject(new { isBusinessException = true, messages = newErr.ValidationMessages.ToArray() });   
+            
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 

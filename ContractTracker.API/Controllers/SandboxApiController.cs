@@ -6,6 +6,8 @@ using ContractTracker.API.Services;
 using ContractTracker.Common.Infrastructure;
 using ContractTracker.Common.ClientAndServerModels.Document;
 using ContractTracker.Services.Business.Models.FileUploadModels;
+using ContractTracker.API.RequestModels;
+using System.Text;
 
 namespace ContractTracker.API.Controllers
 {
@@ -18,7 +20,6 @@ namespace ContractTracker.API.Controllers
         public SandboxApiController(ISignedInUserService signedInUserServiceAccessor)
         {
             this.signedInUserServiceAccessor = signedInUserServiceAccessor;
-            //TODO https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection
         }
 
 
@@ -63,6 +64,7 @@ namespace ContractTracker.API.Controllers
         [HttpPost("kaboom")]
         public UserResponseModel Kaboom()
         {
+            decimal debug = -1;
             throw new Exception("Kaboom");
             return new UserResponseModel() { Role = "sandbox", UserId = 777, UserName = "Kaboom.User", UserUnitIds = new List<int>() { 1, 2, 3 } };
         }
@@ -76,13 +78,8 @@ namespace ContractTracker.API.Controllers
         }
 
         [HttpPost("documentupload")]
-        [ValidateAntiForgeryToken]
         public async Task<DocumentApiResponseModel> DocumentUpload(IFormFile formFile)
         {
-
-            //Need to inject in a location to save files to. 
-            var rootDir = System.Reflection.Assembly.GetExecutingAssembly();
-            var tst = Path.GetDirectoryName(rootDir.Location);
 
             var attachment = new UploadedDocumentRequestModel();
             attachment.FileName = formFile.FileName;
@@ -99,6 +96,67 @@ namespace ContractTracker.API.Controllers
 
             return new DocumentApiResponseModel() { ContractDocumentId = -1, IsBusinessException = false };
         }
+
+        [HttpPost("documentuploadcomplexobject")]
+        public async Task<DocumentApiResponseModel> DocumentUploadComplexObject([FromForm] ContractDocumentApiRequestModel requestModel)
+        {
+            decimal dbug = -1;
+
+            var attachment = new UploadedDocumentRequestModel();
+            attachment.FileName = requestModel.ContractDocumentFormFile.FileName;
+            attachment.GeneratedFileName = Path.GetRandomFileName();
+            attachment.FileContentType = requestModel.ContractDocumentFormFile.ContentType;
+
+            using (var ms = new MemoryStream())
+            {
+                await requestModel.ContractDocumentFormFile.CopyToAsync(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                attachment.FileContent = ms.ToArray();
+            }
+
+            return new DocumentApiResponseModel() { ContractDocumentId = -1, IsBusinessException = false };
+        }
+
+        [HttpGet("getcontractattachmentbyid")]
+        [AllowAnonymous]
+        public ActionResult GetContractAttachmentById(int contractAttachmentId)
+        {
+            //This is how you get static content from Blazor
+            /*
+            protected override async Task OnInitializedAsync()
+            {            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");       } */
+
+            decimal dbug = -1;
+            var rootDir = System.Reflection.Assembly.GetExecutingAssembly();
+            var tst1 = rootDir.FullName;
+
+            var tst = Path.GetDirectoryName(rootDir.Location); //G:\Visual Studio Projects\ContractTracker\ContractTracker.API\bin\Debug\net6.0
+            var tst2 = Path.GetPathRoot(tst);
+
+            StringBuilder sb = new StringBuilder(tst).Append(@"\Content\SampleTextFileForApiResponse.txt");
+
+            string mimeType = "text/plain";
+            Stream stream = System.IO.File.OpenRead(sb.ToString());  //(sb.ToString(), FileMode.Open, FileAccess.Read, FileShare.Read);
+            
+            return new FileStreamResult(stream, mimeType)
+            {
+                FileDownloadName = "SampleTextFileForApiResponse.txt"
+            };
+
+            /*
+            using (FileStream fileStream = System.IO.File.Open(sb.ToString(), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                //MimeMapping.GetMimeMapping(sb)
+                return new FileStreamResult(fileStream, "text/plain");
+            } */
+            //var tst4 = AppDomain.CurrentDomain.BaseDirectory;
+
+            //return await Task.FromResult(sb.ToString());
+        }
+
+
+
+
 
         #region private methods
 

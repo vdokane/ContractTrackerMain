@@ -13,9 +13,9 @@ namespace ContractTracker.Repository.EntityModels
 
 
         [ForeignKey("UnitId")]
-        public Units Units { get; set; }
+        public Units Units { get; set; } = null!;
 
         [ForeignKey("UserId")]
-        public Users Users { get; set; }
+        public Users Users { get; set; } = null!;
     }
 }

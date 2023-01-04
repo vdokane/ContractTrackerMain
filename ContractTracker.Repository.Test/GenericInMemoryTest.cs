@@ -1,29 +1,24 @@
 using ContractTracker.Repository.Interfaces;
 using NUnit.Framework;
-using ContractTracker.Repository.Context;
 using System;
-using ContractTracker.Repository.Implementation;
 using ContractTracker.Repository.EntityModels;
 using System.Collections.Generic;
 using ContractTracker.Repository.QueryRepositories;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using ContractTracker.Repository.Test.Helpers;
 
 namespace ContractTracker.Repository.Test
 {
     public class GenericInMemoryTest
     {
-        private IUnitOfWork uow;
         private IUserQueryRepository userQueryRepository;
+        private OptionsBuilder optionsBuilder;
 
         [SetUp]
         public void Setup()
         {
-            //TOdo, make a common internal Service that builds this
-            var builder = new DbContextOptionsBuilder<TrackerDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString());
-
-            this.uow = new MockUnitOfWork(builder);
+            optionsBuilder = new OptionsBuilder();
+            var uow = optionsBuilder.BuildMockUnitOfWork();
             var context = uow.GetContext();
             context.Users.AddRange(BuildSomeUsers());
             context.SaveChanges();

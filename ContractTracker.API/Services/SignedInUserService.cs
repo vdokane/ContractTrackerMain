@@ -23,7 +23,7 @@
             if (context.HttpContext.User == null)
                 return null;
 
-            return context.HttpContext.User.Identity?.Name;
+            return string.IsNullOrEmpty(context.HttpContext.User.Identity?.Name) ? string.Empty : context.HttpContext.User.Identity?.Name;
 
         }
     }

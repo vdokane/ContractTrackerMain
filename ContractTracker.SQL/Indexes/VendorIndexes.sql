@@ -1,0 +1,1 @@
+﻿CREATE INDEX IDX_Vendor_VendorNumber ON dbo.Vendors (VendorNumber);

@@ -16,13 +16,18 @@ namespace ContractTracker.API.Controllers
             return connectionString;
 
         }
-        protected int GetCurrentUser()
+        protected int GetCurrentUserId()
         {
             var username = HttpContext.User?.Identity?.Name;
             //TODO builder.Services.AddScoped<IMyDependency, MyDependency>();
-            IAuthenticatedUserService authenticatedUserService = new AuthenticatedUserService();  //THIS IS WRONG? SHOULD BE A BUSINESS SERVICE
+            IAuthenticatedUserService authenticatedUserService = new AuthenticatedUserService();  //THIS IS WRONG? SHOULD BE A BUSINESS SERVICE ..or..should it? 
             var userId = authenticatedUserService.GetCurrentUserId(username);
             return userId;
+        }
+        protected string GetCurrentUserName()
+        {
+            var username = HttpContext.User?.Identity?.Name;
+            return (string.IsNullOrEmpty(username)) ? string.Empty : username; 
         }
     }
 }

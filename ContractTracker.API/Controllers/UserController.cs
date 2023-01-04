@@ -16,7 +16,7 @@ namespace ContractTracker.API.Controllers
         public int GetUserIdByUserName(string userName)
         {
             //2022/05/31, we shouldn't really use this too much. This should be done per request. 
-            var userId = base.GetCurrentUser();
+            var userId = base.GetCurrentUserId();
             //TODO Here is where we would use the AUTHENTICATED username to find the user in this app's specifi database. This would build the actual user model which
             //   which would be app specific
             return userId;
@@ -28,7 +28,7 @@ namespace ContractTracker.API.Controllers
         {
 
             var uowFactory = new UowFactory(GetConnectionString());
-            var currentUserId = base.GetCurrentUser(); //todo I don't think we need to verify who can get who
+            var currentUserId = base.GetCurrentUserId(); //todo I don't think we need to verify who can get who
 
             using (var uow = uowFactory.BuildUnitOfWork())
             {

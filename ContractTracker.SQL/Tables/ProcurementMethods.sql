@@ -6,5 +6,6 @@
 	Exemption varchar(1) NOT NULL,
 	ProcurementDocumentRequired bit NOT NULL,
 	Active bit NOT NULL,
+	SoleSourceApplicable bit NULL,
 	CONSTRAINT [PK_ProcurementMethods] PRIMARY KEY CLUSTERED ([ProcurementMethodId] ASC)
 )

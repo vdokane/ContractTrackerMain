@@ -1,13 +1,14 @@
-# TODO  Last Updated 2022/11/14
+# TODO  Last Updated 2022/12/13
 
-## Default placement of DB
-https://stackoverflow.com/questions/10170305/setting-defaultdatapath-and-defaultlogpath-programmatically-using-sql-statement
-:setvar DefaultDataPath "C:\Users\OKANE.DAVID\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
-:setvar DefaultLogPath "C:\Users\OKANE.DAVID\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
 
 ## Where you left off
-Finish IApplicationErrorLogCommandRepository, service, etc. Go ahead and set up an in memory unit test?
+Why is my LIKE broke in VendorSearch? Noob!  System.InvalidCastException: 'Unable to cast object of type 'System.Int64' to type 'System.Int32'.'
+Build a good repo for consuming it <-- in progress with the unit test. Do I need EXECUTE?
+
+
+Since local DB has been created, test saving! IApplicationErrorService ..and getting. This will be a good table to use to test grid/filtering
 And can SelectFiler.razor be accessed?
+Test UOW mock transaction
 
 ## Error
 - Error boundries on client, in a catch, call ErrorServiceApi, figure out error request model. 

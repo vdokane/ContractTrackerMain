@@ -4,6 +4,7 @@ using ContractTracker.Repository.MockQueryRepositories;
 using ContractTracker.Repository.QueryRepositories;
 using ContractTracker.Services.Business.Services;
 using ContractTracker.Services.Business.ApplicationServices;
+using ContractTracker.Repository.CommandRepositories;
 
 namespace ContractTracker.Services.Business.Factories
 {
@@ -65,18 +66,20 @@ namespace ContractTracker.Services.Business.Factories
        
 
         #region application services
+        //This will capture errors from client and save to the DB only. 
         public IApplicationErrorService BuildApplicationErrorService()
         {
-            return new ApplicationErrorService();
+            IApplicationErrorLogCommandRepository applicationErrorLogCommandRepository = new ApplicationErrorLogCommandRepository(unitOfWork);
+            return new ApplicationErrorService(applicationErrorLogCommandRepository);
         }
 
         //TODO, do I want to write to the file system log if db is down? How will that act in a cloud instance or container?
         //TODO2, am I building uneeded stuff here? I mean, what else do I log, can error do the same?
-        public IApplicationLoggingService BuildLoggingService()
-        {
-            var loggingService = new ApplicationLoggingService();
-            return loggingService;
-        }
+        //public IApplicationLoggingService BuildLoggingService()
+        //{
+          //  var loggingService = new ApplicationLoggingService();
+            //return loggingService;
+        //}
 
         //todo build repo 
         public IApplicationSettingsService BuidApplicationSettingsService()

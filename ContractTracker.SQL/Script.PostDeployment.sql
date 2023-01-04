@@ -16,3 +16,5 @@ Post-Deployment Script Template
 :r .\Seed\Seed.Units.sql
 :r .\Seed\Seed.AttachmentTypes.sql
 :r .\Seed\Seed.ContractUserTypes.sql
+
+:r .\Indexes\VendorIndexes.sql

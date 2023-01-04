@@ -5,6 +5,7 @@ namespace ContractTracker.Services.Business.Models.Logging
     {
         public string CurrentPage { get; set; } = string.Empty;
         public string ErrorMessage { get; set; } = string.Empty;
-        public string CurrentUserName { get; set; } = string.Empty;
+        public int CurrentUserId { get; set; }
+        public string UserName { get; set; } = string.Empty;
     }
 }

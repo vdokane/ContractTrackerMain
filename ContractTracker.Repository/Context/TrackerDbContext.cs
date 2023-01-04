@@ -19,6 +19,12 @@ namespace ContractTracker.Repository.Context
             //this.Database.SetCommandTimeout(timeSpan);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VendorSearch_Result>().HasNoKey();
+                //.HasAlternateKey(b => b.RowNum);
+        }
+
         public DbSet<Users> Users => Set<Users>();
         public DbSet<UserUnits> UserUnits => Set<UserUnits>();
         public DbSet<UserRoles> UserRoles => Set<UserRoles>();
@@ -46,5 +52,8 @@ namespace ContractTracker.Repository.Context
         public DbSet<ContractAttachments> ContractAttachments => Set<ContractAttachments>();
         public DbSet<ApplicationSettings> ApplicationSettings => Set<ApplicationSettings>();
         public DbSet<ApplicationErrorLogs> ApplicationErrorLogs => Set<ApplicationErrorLogs>();
+        //public DbSet<VendorSearch_Result> VendorSearch_Result => Set<VendorSearch_Result>();
+        public virtual DbSet<VendorSearch_Result> VendorSearch_Result { get; set; }
+
     }
 }

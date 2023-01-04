@@ -25,19 +25,20 @@ namespace ContractTracker.API.Controllers
             var currentUserName = signedInUserServiceAccessor.GetCurrentUserAccountName();
 
             var uowFactory = new UowFactory(GetConnectionString());
-            var currentUserId = base.GetCurrentUser(); //todo, what works better? I would assume associating
+            var currentUserId = base.GetCurrentUserId();
 
             using (var uow = uowFactory.BuildUnitOfWork())
             {
                 var businessServiceFactory = new BusinessServiceFactory(uow);
-                var loggingService = businessServiceFactory.BuildLoggingService();
+                var applicationErrorService = businessServiceFactory.BuildApplicationErrorService();
 
                 var appErrorModel = new ApplicationErrorLogModel();
                 appErrorModel.ErrorMessage = requestModel.Message;
                 appErrorModel.CurrentPage = requestModel.CurrentPage;
-                appErrorModel.CurrentUserName = currentUserName;
+                appErrorModel.CurrentUserId = currentUserId;
+                appErrorModel.UserName = currentUserName;
 
-                await loggingService.SaveClientErrorLog(appErrorModel);
+                await applicationErrorService.SaveClientError(appErrorModel);
 
             }
         }

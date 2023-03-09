@@ -1,5 +1,4 @@
-﻿
-namespace ContractTracker.Services.Business.Models.Vendor
+﻿namespace ContractTracker.Services.Business.Models.Vendor
 {
     public class VendorResponseModel
     {

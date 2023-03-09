@@ -23,7 +23,7 @@ namespace ContractTracker.Repository.QueryRepositories
         {
 
             var empRecord = await context.VendorSearch_Result
-                .FromSqlRaw($"EXEC dbo.VendorSearch {requestModel.PageSize},{requestModel.PageCount},'{requestModel.SortColumn}', '{requestModel.SortDirection}','{requestModel.FilterByVendorType}','{requestModel.FilterByVendorNumber}','{requestModel.FilterBySequenceNumber}','{requestModel.FilterByPurchasingName}'")
+                .FromSqlRaw($"EXEC dbo.VendorSearch {requestModel.PageSize},{requestModel.PageNumber},'{requestModel.SortColumn}', '{requestModel.SortDirection}','{requestModel.FilterByVendorType}','{requestModel.FilterByVendorNumber}','{requestModel.FilterBySequenceNumber}','{requestModel.FilterByPurchasingName}'")
                 .AsNoTracking()
                 .ToListAsync();
             return empRecord;

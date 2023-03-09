@@ -7,5 +7,6 @@
 	[UnitCode] [varchar](5) NULL,
 	[AllUsersCanSubmit] [bit] NULL,
 	[PurchaseRequiresSpecialRouting] [bit] NULL,
+	[EndDate] [datetime] NULL,
 	CONSTRAINT [PK_Units] PRIMARY KEY CLUSTERED ([UnitId] ASC),
 )

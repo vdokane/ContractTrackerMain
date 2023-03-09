@@ -1,6 +1,6 @@
-﻿namespace ContractTracker.Repository.QueryModels
+﻿namespace ContractTracker.API.RequestModels.Shared
 {
-    public abstract class GridRequestModel
+    public abstract class SearchRequestBaseApiModel
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }

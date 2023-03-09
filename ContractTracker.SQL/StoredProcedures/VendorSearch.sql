@@ -25,7 +25,7 @@ BEGIN
 		AND	(@filterByVendorType IS NULL OR VendorType = @filterByVendorType) 
 		AND (@filterByVendorNumber IS NULL OR VendorNumber = @filterByVendorNumber) 
 		AND (@filterBySequenceNumber IS NULL OR SequenceNumber = @filterBySequenceNumber) 
-		AND (@filterByPurchasingName IS NULL OR PurchasingNameLine1 LIKE '%' + @filterByPurchasingName + '%')
+		AND (@filterByPurchasingName IS NULL OR PurchasingNameLine1 LIKE '%' + @filterByPurchasingName + '%') --TODO full text!, when not on SSMS express
 	),
 	cte_results AS 
 	(

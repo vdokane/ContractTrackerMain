@@ -30,7 +30,7 @@ namespace ContractTracker.Repository.Test
         public async Task GivenASampleUserCanItBeQueriedByLoginName()
         {
             var requestModel = new VendorSearchRequestModel();
-            requestModel.PageCount = 1;
+            requestModel.PageNumber = 1;
             requestModel.FilterByVendorNumber = "547989128";
             requestModel.FilterBySequenceNumber = null;
             requestModel.FilterByPurchasingName = null;

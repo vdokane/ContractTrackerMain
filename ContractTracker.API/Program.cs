@@ -30,7 +30,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 authenticationScheme: JwtBearerDefaults.AuthenticationScheme,
                 configureOptions: options =>
                 {
-                    //Configuration.Bind("JwtSettings", options)
                     options.IncludeErrorDetails = true;
                     options.TokenValidationParameters =
                         new Microsoft.IdentityModel.Tokens.TokenValidationParameters()

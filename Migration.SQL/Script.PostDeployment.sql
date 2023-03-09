@@ -9,14 +9,5 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r .\Seed\Seed.ContractTypes.sql
-:r .\Seed\Seed.ProcurementMethods.sql
-:r .\Seed\Seed.MethodOfPayments.sql
-:r .\Seed\Seed.TrackingSteps.sql
-:r .\Seed\Seed.Units.sql
-:r .\Seed\Seed.AttachmentTypes.sql
-:r .\Seed\Seed.ContractUserTypes.sql
-:r .\Seed\Seed.UserRoles.sql
-:r .\Seed\Seed.ServiceTypes.sql
-
-:r .\Indexes\VendorIndexes.sql
+:r .\TableMigrationScripts\LoadProcurementMethods.sql
+:r .\TableMigrationScripts\LoadUserRoles.sql

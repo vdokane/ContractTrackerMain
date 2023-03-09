@@ -1,4 +1,12 @@
-# TODO  Last Updated 2022/12/13
+# TODO  Last Updated 2023/2/2
+New vendor table needs actual aduit fields
+So the very next thing to do is finish the migration script between SandBoxLite to ContractTracker
+That way the vendor table will be populated and you will have records to use for searching. 
+ USE SandBoxLite
+ GO
+ select count(1) from Vendors
+ --199500
+THAT WAY... you can build a new griding/search system. 
 
 
 ## Where you left off

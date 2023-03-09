@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>ContractTracker.SQL</Name>
+    <Name>Migration.SQL</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{ab2e71c5-472c-4860-8d33-68b59a4651f4}</ProjectGuid>
+    <ProjectGuid>{aed5b204-ffc5-4ff7-9212-612dc4c0230d}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>ContractTracker.SQL</RootNamespace>
-    <AssemblyName>ContractTracker.SQL</AssemblyName>
+    <RootNamespace>Migration.SQL</RootNamespace>
+    <AssemblyName>Migration.SQL</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -56,54 +56,27 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Seed" />
+    <Folder Include="Schema" />
     <Folder Include="Tables" />
-    <Folder Include="StoredProcedures" />
-    <Folder Include="Indexes" />
+    <Folder Include="TableMigrationScripts" />
+    <Folder Include="LoadPermanentScripts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema\Migration.sql" />
+    <None Include="TableMigrationScripts\StageProcurementMethods.sql" />
+    <Build Include="Tables\VendorMigration.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\UserRoleMigrations.sql" />
+    <Build Include="Tables\UserMigrations.sql" />
+    <Build Include="Tables\AnnouncementMigrations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\ContractAmendmentAttachments.sql" />
-    <Build Include="Tables\ContractAmendmentsAmendments.sql" />
-    <Build Include="Tables\Announcements.sql" />
-    <Build Include="Tables\AttachmentTypes.sql" />
-    <Build Include="Tables\Budgets.sql" />
-    <Build Include="Tables\ContractUsers.sql" />
-    <Build Include="Tables\Contracts.sql" />
-    <Build Include="Tables\ContractTypes.sql" />
-    <Build Include="Tables\Deliverables.sql" />
-    <Build Include="Tables\ErrorLog.sql" />
-    <Build Include="Tables\FlairCodes.sql" />
-    <Build Include="Tables\MethodOfPayments.sql" />
-    <Build Include="Tables\ContractUserTypes.sql" />
-    <Build Include="Tables\ProcurementMethods.sql" />
-    <Build Include="Tables\Reports.sql" />
-    <Build Include="Tables\TrackingHistory.sql" />
-    <Build Include="Tables\TrackingSteps.sql" />
-    <Build Include="Tables\Units.sql" />
-    <Build Include="Tables\UserRoles.sql" />
-    <Build Include="Tables\Users.sql" />
-    <Build Include="Tables\Vendors.sql" />
-    <None Include="Seed\Seed.AttachmentTypes.sql" />
-    <None Include="Seed\Seed.ContractTypes.sql" />
-    <None Include="Seed\Seed.MethodOfPayments.sql" />
-    <None Include="Seed\Seed.ContractUserTypes.sql" />
-    <None Include="Seed\Seed.ProcurementMethods.sql" />
-    <None Include="Seed\Seed.TrackingSteps.sql" />
-    <None Include="Seed\Seed.Units.sql" />
-    <Build Include="Tables\ApplicationSettings.sql" />
-    <Build Include="Tables\UserUnits.sql" />
-    <Build Include="Tables\ApplicationErrorLogs.sql" />
-    <Build Include="StoredProcedures\VendorSearch.sql" />
-    <Build Include="Tables\FundTypes.sql" />
-    <Build Include="Tables\ServiceTypes.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ContractTracker.SQL.Local.publish.xml" />
-    <None Include="Indexes\VendorIndexes.sql" />
-    <None Include="Seed\Seed.UserRoles.sql" />
-    <None Include="Seed\Seed.ServiceTypes.sql" />
+    <None Include="TableMigrationScripts\StageUserRoles.sql" />
+    <None Include="TableMigrationScripts\StageVendorMigrations.sql" />
+    <None Include="LoadPermanentScripts\LoadVendors.sql" />
   </ItemGroup>
 </Project>

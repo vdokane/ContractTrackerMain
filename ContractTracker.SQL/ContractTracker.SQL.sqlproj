@@ -99,6 +99,7 @@
     <Build Include="StoredProcedures\VendorSearch.sql" />
     <Build Include="Tables\FundTypes.sql" />
     <Build Include="Tables\ServiceTypes.sql" />
+    <Build Include="Tables\ExportLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ContractTracker.SQL.Local.publish.xml" />

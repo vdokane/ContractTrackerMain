@@ -1,0 +1,14 @@
+﻿@inherits DropDownFilterBase
+@using ContractTracker.ClientModels.Generic
+
+<h3>DropDownFilter</h3>
+
+<EditForm Model="dropDownFilerComponent">
+
+        <InputSelect class="form-select" id="domain" @bind-Value="dropDownFilerComponent.Value">
+                @foreach (var domain in dropDownFilerComponent.HardCodedSelectOptions)
+                {
+                <option value=@domain.Value>@domain.Text</option>
+                }
+            </InputSelect>
+    </EditForm>

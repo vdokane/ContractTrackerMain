@@ -45,9 +45,8 @@
 	[AddOperatingLevelOrganization] [varchar](255) NULL,
 	[UpdateOperatingLevelOrganization] [varchar](255) NULL,
 	[UpdateUserIdentifier] [varchar](255) NULL,
-	[UpdateDate] [datetime] NULL
-
-	[VendorIDLegacy] INT NULL,
+	[UpdateDate] [datetime] NULL,
+	[VendorIDLegacy] INT NULL
 	--todo better audit fields
 
 	CONSTRAINT [PK_Vendors] PRIMARY KEY CLUSTERED ([VendorId] ASC)

@@ -5,10 +5,13 @@
 
 <EditForm Model="dropDownFilerComponent">
 
-        <InputSelect class="form-select" id="domain" @bind-Value="dropDownFilerComponent.Value">
-                @foreach (var domain in dropDownFilerComponent.HardCodedSelectOptions)
-                {
-                <option value=@domain.Value>@domain.Text</option>
-                }
-            </InputSelect>
-    </EditForm>
+    <InputSelect class="form-select" id="domain" 
+                ValueExpression="@(() => dropDownFilerComponent.Value)"
+                Value="dropDownFilerComponent.Value" 
+                ValueChanged="@((string value) => ValueChanged(value))">
+        @foreach (var domain in dropDownFilerComponent.HardCodedSelectOptions)
+        {
+            <option value=@domain.Value>@domain.Text</option>
+        }
+    </InputSelect>
+</EditForm>

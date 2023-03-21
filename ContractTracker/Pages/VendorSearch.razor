@@ -11,6 +11,7 @@
     <li> Where should they go!?</li>
     <li> Where should the client models for them go? </li>
 </ul>
+//https://learn.microsoft.com/en-us/dotnet/architecture/blazor-for-web-forms-developers/components
 @if(vendors != null)
 {
     <div>Number of vendors @vendors.Count().ToString()</div>
@@ -18,4 +19,4 @@
 
 <ContractTracker.Controls.Grid.Filters.StringFilter></ContractTracker.Controls.Grid.Filters.StringFilter>
 <ContractTracker.Controls.Grid.Filters.DateFilter></ContractTracker.Controls.Grid.Filters.DateFilter>
-<ContractTracker.Controls.Grid.Filters.DropDownFilter></ContractTracker.Controls.Grid.Filters.DropDownFilter>
+<ContractTracker.Controls.Grid.Filters.DropDownFilter  OnChangeCallback="@FilterStateChange" NameOfThisFilter="DropDownDemo"></ContractTracker.Controls.Grid.Filters.DropDownFilter>

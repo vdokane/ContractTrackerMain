@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TODO.md = TODO.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Export.Test", "ContractTracker.Export.Test\ContractTracker.Export.Test.csproj", "{946DBCEC-1C5E-4707-9269-00E1E87AD0F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.API.Test", "ContractTracker.Export.Test\ContractTracker.API.Test.csproj", "{946DBCEC-1C5E-4707-9269-00E1E87AD0F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractTracker.Repository.Test", "ContractTracker.Repository.Test\ContractTracker.Repository.Test.csproj", "{FE163055-A3F9-4B96-B3FF-BF643D361DAD}"
 EndProject

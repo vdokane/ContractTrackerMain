@@ -1,14 +1,26 @@
 using NUnit.Framework;
+using ContractTracker.API;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ContractTracker.Export.Test
 {
+    //https://stackoverflow.com/questions/71532313/asp-net-core-6-0-web-api-unit-test-using-nunit
+    //public class SUTFactory : WebApplicationFactory<Startup>
+    //{
+        //protected override IHostBuilder CreateHostBuilder()
+      //  {
+          //  return Program.CreateHostBuilder(null);
+        //}
+    //}
     public class Tests
     {
         [SetUp]
         public void Setup()
         {
-            //todo - contract detail 1 record, contract budget 3 rows, contract change - 2 rows
-            //.. so how do I create a collection of the max rows (3 in this case?)
+            //todo - how do you set up host build and envoke start up>? 
         }
 
         [Test]

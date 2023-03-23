@@ -1,0 +1,68 @@
+﻿@page "/gridsandbox"
+@inherits GridSandboxComponentBase
+
+<div class="row form-row">
+    <div class="col-md-12">
+
+        <h1>Construction Zone for new grid system</h1>
+        <div>
+            This is getting close, but how can a filter control emit a, "remove me" call back and also a "filter value changed" event? Hm?
+            <p>The filter call back model needs to be complex to handle enough I guess.</p>
+        </div>
+        <div>
+            So this page needs to have a GridComponent. It will need to handle events from a grid (paging/sorting) and events from
+            the filter component. Any time either of those two subcomponents change, the search request model will need
+            to be rebuild and the grid componet will issue a new request and rebuild
+        </div>
+        <div>
+            So the filter component needs to figure out (from params from grid object)
+            <ol>
+                <li>    How many filters there will be    </li>
+                <li>    What type each filter will be (input text, datetime, select)    </li>
+                <li> It will manage which ones have been added and removed from the avaliable list </li>
+                <li> It will figure out how to add and remove the individual filter components dynamically </li>
+                <li>And how to grab the value for each, and emit that model back to the parent component</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row form-row">
+    <div class="col-md-12">
+        First thing, first, have a drop down to add and subtract components dynamically
+    </div>
+</div>
+
+
+
+<EditForm Model="allSearchFilterComponent" OnValidSubmit="@HandleValidSubmit">
+    <div class="row form-row">
+        <div class="col-md-8">
+            <InputSelect class="form-select" id="domain"
+                         ValueExpression="@(() => allSearchFilterComponent.Value)"
+                         Value="allSearchFilterComponent.Value"
+                         ValueChanged="@((string value) => FitlerValueChanged(value))">
+                @foreach (var domain in allSearchFilterComponent.HardCodedSelectOptions)
+                {
+                    <option value=@domain.Value>@domain.Text</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success"> + </button>
+        </div>
+    </div>
+</EditForm>
+
+<div class="row form-row">
+    <div class="col-md-12">
+        <h1>THIS SHOULD BE IT! </h1>
+        @foreach (var component in AllFilterComponents)
+        {
+            <DynamicComponent Type=@component.Type Parameters=@component.Parameters />
+        }
+
+    </div>
+</div>
+
+

@@ -1,8 +1,10 @@
-﻿using ContractTracker.ClientModels.Generic;
+﻿using ContractTracker.ClientModels.Controls.Grid;
+using ContractTracker.ClientModels.Generic;
 using Microsoft.AspNetCore.Components;
 
 namespace ContractTracker.Controls.Grid.Filters
 {
+    //This was just testing
     public class DropDownFilerComponent
     {
         public List<SelectComponetModel> HardCodedSelectOptions = new List<SelectComponetModel>();
@@ -15,10 +17,12 @@ namespace ContractTracker.Controls.Grid.Filters
         public EventCallback<FilterModel> OnChangeCallback { get; set; }
 
         [Parameter]
+        public IDictionary<string, object> FitlerParameters { get; set; } //Can this be type safe
         public string NameOfThisFilter { get; set; }
 
+        protected readonly DropDownFilterParamterModel dropDownFilterParamterModel;
 
-        protected DropDownFilerComponent dropDownFilerComponent;
+        protected DropDownFilerComponent dropDownFilerComponent; //just testing
 
         public DropDownFilterBase()
         {
@@ -30,6 +34,10 @@ namespace ContractTracker.Controls.Grid.Filters
 
             NameOfThisFilter = "fromConstructor";
 
+            if(FitlerParameters == null)
+                FitlerParameters = new Dictionary<string, object>();
+
+            dropDownFilterParamterModel = new DropDownFilterParamterModel();
         }
 
         protected override async Task OnInitializedAsync()

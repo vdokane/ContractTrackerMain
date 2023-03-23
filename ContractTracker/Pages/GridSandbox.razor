@@ -59,7 +59,9 @@
         <h1>THIS SHOULD BE IT! </h1>
         @foreach (var component in AllFilterComponents)
         {
-            <DynamicComponent Type=@component.Type Parameters=@component.Parameters />
+            <div class="mb-2">
+                <DynamicComponent Type=@component.Type Parameters=@component.Parameters />
+            </div>
         }
 
     </div>

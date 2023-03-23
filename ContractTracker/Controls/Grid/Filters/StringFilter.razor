@@ -1,12 +1,11 @@
-﻿<div class="row form-row">
+﻿@inherits StringFitlerBase
+
+<div class="row form-row">
     <div class="col-md-8">
-        <input type="text" placeholder="string filter" class="form-control" />
+        <input type="text" placeholder="@stringFilterParameterModel.PlaceholderText" class="form-control" value="@stringFilterParameterModel.PreSetValue" />
     </div>
     <div class="col-md-4">
         <input type="button" value="-" class="btn bg-danger" />
     </div>
 </div>
-
-@code {
-
-}
+ 

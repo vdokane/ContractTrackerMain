@@ -4,6 +4,9 @@ using ContractTracker.Services;
 using ContractTracker.Common.ClientAndServerModels.Vendor;
 using ContractTracker.Controls.Grid;
 using ContractTracker.ClientModels.Generic;
+using ContractTracker.ClientModels.Controls.Grid;
+using ContractTracker.Infrastructure;
+using System.Reflection;
 
 namespace ContractTracker.Pages
 {
@@ -46,7 +49,7 @@ namespace ContractTracker.Pages
         {
             Console.WriteLine("HandleValidSubmit called", allSearchFilterComponent.Value);
 
-            TextToTest += allSearchFilterComponent.Value;
+            
             //... now, how to add components here.. shit..
             //https://learn.microsoft.com/en-us/aspnet/core/blazor/components/dynamiccomponent?view=aspnetcore-6.0
             //https://www.youtube.com/watch?v=6JIADmG2kxo
@@ -64,10 +67,17 @@ namespace ContractTracker.Pages
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);
                 filterComponentType = Type.GetType($"ContractTracker.Controls.Grid.Filters.StringFilter");
 
+                filterComponentType = Type.GetType($"ContractTracker.Controls.Grid.Filters.StringFilter");
+                var stringFilterParameterModel = new StringFilterParameterModel();
+                stringFilterParameterModel.FilterId = "filterByInput1";
+                stringFilterParameterModel.PreSetValue = "this comes from GridSandbox1";
+                stringFilterParameterModel.PlaceholderText = "Place holder text1";
+
                 var dynamicComponent = new DynamicComponent();
                 dynamicComponent.Type = filterComponentType;
-                var paramsForCompnt = new Dictionary<string, object>();
+                var paramsForCompnt = stringFilterParameterModel.AsDictionary();
                 dynamicComponent.Parameters = paramsForCompnt;
+                //TODO, check to make sure it doesn't already exist... but how?!
                 AllFilterComponents.Add(dynamicComponent);
 
             }
@@ -92,11 +102,22 @@ namespace ContractTracker.Pages
                 if (option != null)
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);
 
+                //This seems silly to flatten out an object to a dictionary and then rebuild it back in the DynamicControl, but I guess
+                //that was MS's way of making it consistent and re-usable
+
+
                 filterComponentType = Type.GetType($"ContractTracker.Controls.Grid.Filters.StringFilter");
+                var stringFilterParameterModel = new StringFilterParameterModel();
+                stringFilterParameterModel.FilterId = "filterByInput2";
+                stringFilterParameterModel.PreSetValue = "this comes from GridSandbox2";
+                stringFilterParameterModel.PlaceholderText = "Place holder text2";
+
+
 
                 var dynamicComponent = new DynamicComponent();
                 dynamicComponent.Type = filterComponentType;
-                var paramsForCompnt = new Dictionary<string, object>();
+                //var paramsForCompnt = //new Dictionary<string, object>();
+                var paramsForCompnt = stringFilterParameterModel.AsDictionary();
                 dynamicComponent.Parameters = paramsForCompnt;
                 AllFilterComponents.Add(dynamicComponent);
 

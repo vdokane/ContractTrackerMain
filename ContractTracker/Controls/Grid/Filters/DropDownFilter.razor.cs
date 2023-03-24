@@ -17,7 +17,15 @@ namespace ContractTracker.Controls.Grid.Filters
         public EventCallback<FilterModel> OnChangeCallback { get; set; }
 
         [Parameter]
-        public IDictionary<string, object> FitlerParameters { get; set; } //Can this be type safe
+        public string FilterId { get; set; } = string.Empty;
+        
+        [Parameter]
+        public string PreSelectedValue { get; set; } = string.Empty;
+
+        [Parameter]
+        public List<SelectComponetModel> Options { get; set; }  = new List<SelectComponetModel>();
+
+
         public string NameOfThisFilter { get; set; }
 
         protected readonly DropDownFilterParamterModel dropDownFilterParamterModel;
@@ -34,8 +42,6 @@ namespace ContractTracker.Controls.Grid.Filters
 
             NameOfThisFilter = "fromConstructor";
 
-            if(FitlerParameters == null)
-                FitlerParameters = new Dictionary<string, object>();
 
             dropDownFilterParamterModel = new DropDownFilterParamterModel();
         }

@@ -62,27 +62,36 @@ namespace ContractTracker.Pages
             //filterComponentType = e.Value?.ToString()?.Length > 0 ?
             if (allSearchFilterComponent.Value == "filterByInput1")
             {
+
+                Console.WriteLine("filterByInput1 selected");
+
                 var option = allSearchFilterComponent.HardCodedSelectOptions.Find(x => x.Value == "filterByInput1");
                 if(option != null)
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);
-                filterComponentType = Type.GetType($"ContractTracker.Controls.Grid.Filters.StringFilter");
+                
 
                 filterComponentType = Type.GetType($"ContractTracker.Controls.Grid.Filters.StringFilter");
                 var stringFilterParameterModel = new StringFilterParameterModel();
                 stringFilterParameterModel.FilterId = "filterByInput1";
                 stringFilterParameterModel.PreSetValue = "this comes from GridSandbox1";
                 stringFilterParameterModel.PlaceholderText = "Place holder text1";
+                var paramsForCompnt = stringFilterParameterModel.AsDictionary();
+                
+                Console.WriteLine(paramsForCompnt.ToArray());
 
                 var dynamicComponent = new DynamicComponent();
                 dynamicComponent.Type = filterComponentType;
-                var paramsForCompnt = stringFilterParameterModel.AsDictionary();
+                
                 dynamicComponent.Parameters = paramsForCompnt;
                 //TODO, check to make sure it doesn't already exist... but how?!
+                Console.WriteLine(dynamicComponent);
                 AllFilterComponents.Add(dynamicComponent);
 
             }
             else if (allSearchFilterComponent.Value == "filterByDateTime")
             {
+                Console.WriteLine("filterByDateTime selected");
+
                 var option = allSearchFilterComponent.HardCodedSelectOptions.Find(x => x.Value == "filterByDateTime");
                 if (option != null)
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);
@@ -98,6 +107,8 @@ namespace ContractTracker.Pages
             }
             else if (allSearchFilterComponent.Value == "filterByInput2")
             {
+
+                Console.WriteLine("filterByInput2 selected");
                 var option = allSearchFilterComponent.HardCodedSelectOptions.Find(x => x.Value == "filterByInput2");
                 if (option != null)
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);
@@ -124,6 +135,9 @@ namespace ContractTracker.Pages
             }
             else if (allSearchFilterComponent.Value == "filterBySelect")
             {
+
+                Console.WriteLine("filterBySelect selected");
+
                 var option = allSearchFilterComponent.HardCodedSelectOptions.Find(x => x.Value == "filterBySelect");
                 if (option != null)
                     allSearchFilterComponent.HardCodedSelectOptions.Remove(option);

@@ -1,5 +1,6 @@
 ﻿namespace ContractTracker.ClientModels.Controls.Grid
 {
+    //TODO delete me, the IDic maps them for us! Thank you Blazor
     public class StringFilterParameterModel
     {
         public string FilterId { get;set; } = string.Empty;

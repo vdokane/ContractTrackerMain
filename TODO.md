@@ -1,8 +1,18 @@
+
+
 Was this supposed to be in this project?
 ContractTracker.Export.Test
+Git/Get MSBuil working on the SSDT so you can check in your GitHubAction build yaml
 
+# TODO  Last Updated 2023/3/24
+REMOVE filter component models.. the IDictionary maps it for you. Thank you Blazor!
+DateTime drop down is sending wrong wrong.
+Each filter control needs a heading text/param
+Get the call backs, er, delegates working! 
 
-# TODO  Last Updated 2023/2/2
+---TODO db stuff
+Make sure Service types have a seed script and are now maintained in this DB like the legacy db.
+What about load proc methods
 New vendor table needs actual aduit fields
 So the very next thing to do is finish the migration script between SandBoxLite to ContractTracker
 That way the vendor table will be populated and you will have records to use for searching. 

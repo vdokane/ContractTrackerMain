@@ -62,3 +62,21 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+.thetext {
+    color: white;
+    animation-name: example;
+    animation-duration: 4s;
+    font-weight: bold;
+}
+
+@keyframes example {
+    from {
+        color: green;
+    }
+
+    to {
+        color: white;
+    }
+}

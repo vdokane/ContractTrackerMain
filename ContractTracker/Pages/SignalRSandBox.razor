@@ -1,0 +1,47 @@
+﻿@page "/signlarsandbox"
+@inherits SignalRSandBoxComponentBase
+<PageTitle>Index</PageTitle>
+
+<div class="container">
+    <h3>Signal R SandBox</h3>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>
+                    User:
+                    <input @bind="userInput" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Message:
+                    <input @bind="messageInput" size="50" />
+                </label>
+            </div>
+            <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+
+            <hr>
+            @if (showClass)
+            {
+                <div class="alert-danger">
+                    New message has been added
+                </div>
+                <div>
+                    <span class="thetext">New message fade out</span>
+
+                </div>
+            }
+
+            <ul id="messagesList">
+                @foreach (var message in messages)
+                {
+                    <li>@message</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+

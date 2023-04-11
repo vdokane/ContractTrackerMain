@@ -1,10 +1,13 @@
+# TODO  Last Updated 2023/3/27
+COOL! It is aliiiiive... now to handle events...
+What does the payload need to look like? Type of event, like value changed or remove me. Id for me. And if value changed, the actual value
 
 
 Was this supposed to be in this project?
 ContractTracker.Export.Test
 Git/Get MSBuil working on the SSDT so you can check in your GitHubAction build yaml
 
-# TODO  Last Updated 2023/3/24
+
 REMOVE filter component models.. the IDictionary maps it for you. Thank you Blazor!
 DateTime drop down is sending wrong wrong.
 Each filter control needs a heading text/param

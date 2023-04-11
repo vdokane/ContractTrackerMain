@@ -1,6 +1,10 @@
 ﻿@inherits DropDownFilterBase
 @using ContractTracker.ClientModels.Generic
 
+
+<div>
+    Test (Filter Id, but this could be a filter description): @FilterId
+</div>
 <div class="row form-row">
     <div class="col-md-8">
         <EditForm Model="dropDownFilerComponent">
@@ -16,6 +20,6 @@
         </EditForm>
     </div>
     <div class="col-md-4">
-        <input type="button" value="-" class="btn bg-danger" />
+        <button type="button" class="btn bg-danger" @onclick="() => RemoveMe()"> <span class="oi oi-minus" aria-hidden="true"></span> </button>
     </div>
 </div>

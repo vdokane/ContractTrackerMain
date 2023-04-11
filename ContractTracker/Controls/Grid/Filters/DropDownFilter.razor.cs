@@ -14,7 +14,7 @@ namespace ContractTracker.Controls.Grid.Filters
     public class DropDownFilterBase : ComponentBase
     {
         [Parameter]
-        public EventCallback<FilterModel> OnChangeCallback { get; set; }
+        public EventCallback<GridDelegateModel> OnChangeCallback { get; set; }
 
         [Parameter]
         public string FilterId { get; set; } = string.Empty;
@@ -26,7 +26,7 @@ namespace ContractTracker.Controls.Grid.Filters
         public List<SelectComponetModel> Options { get; set; }  = new List<SelectComponetModel>();
 
 
-        public string NameOfThisFilter { get; set; }
+        //public string NameOfThisFilter { get; set; }
 
         protected readonly DropDownFilterParamterModel dropDownFilterParamterModel;
 
@@ -40,7 +40,7 @@ namespace ContractTracker.Controls.Grid.Filters
             dropDownFilerComponent.HardCodedSelectOptions.Add(new SelectComponetModel() { Text = "two", Value = "2" });
             dropDownFilerComponent.HardCodedSelectOptions.Add(new SelectComponetModel() { Text = "three", Value = "3" });
 
-            NameOfThisFilter = "fromConstructor";
+            //NameOfThisFilter = "fromConstructor";
 
 
             dropDownFilterParamterModel = new DropDownFilterParamterModel();
@@ -52,17 +52,30 @@ namespace ContractTracker.Controls.Grid.Filters
             await base.OnInitializedAsync();
         }
 
+        //TODO delete myself event
+
         protected async Task ValueChanged(string newValue)
         {
             Console.WriteLine(newValue);
             dropDownFilerComponent.Value = newValue;
-            var filterModel = new FilterModel();
-            filterModel.FilterName = NameOfThisFilter;
-            filterModel.FilterValue = newValue;
-            await OnChangeCallback.InvokeAsync(filterModel);
-            //return Task.CompletedTask;
+            
+            var gridDelegateModel = new GridDelegateModel();
+            gridDelegateModel.FilterId = FilterId;
+            gridDelegateModel.FilterValue = newValue;
+            gridDelegateModel.EventType = "ValueChange"; //todo this needs to be an enum or something type safe to manage all the different event types a component filter can emit
+
+            await OnChangeCallback.InvokeAsync(gridDelegateModel);
         }
 
+        protected async Task RemoveMe()
+        {
+            Console.WriteLine("DropDown Filter RemoveMe clicked");
+            var gridDelegateModel = new GridDelegateModel();
+            gridDelegateModel.FilterId = FilterId;
+            gridDelegateModel.EventType = "RemoveMe"; //todo this needs to be an enum or something type safe to manage all the different event types a component filter can emit
+
+            await OnChangeCallback.InvokeAsync(gridDelegateModel);
+        }
 
 
 

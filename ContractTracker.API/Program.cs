@@ -2,6 +2,8 @@ using ContractTracker.API.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //Use NuGet Microsoft.AspNetCore.Authentication.JwtBearer
 using ContractTracker.API.Middleware;
+using ContractTracker.API.Hubs;
+using Microsoft.AspNetCore.ResponseCompression; //For hub compression
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 
 
 builder.Services.AddCors(options =>
@@ -53,7 +60,7 @@ builder.Services.AddTransient<ISignedInUserService, SignedInUserService>();
  
 
 var app = builder.Build();
-
+app.UseResponseCompression();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -64,4 +71,5 @@ app.UseBusinessRuleException();
 app.UseCors();  
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 app.Run();

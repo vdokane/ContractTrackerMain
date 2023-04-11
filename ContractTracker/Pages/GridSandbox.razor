@@ -37,7 +37,7 @@
 
 <EditForm Model="allSearchFilterComponent" OnValidSubmit="@HandleValidSubmit">
     <div class="row form-row">
-        <div class="col-md-8">
+        <div class="col-md-4">
             <InputSelect class="form-select" id="domain"
                          ValueExpression="@(() => allSearchFilterComponent.Value)"
                          Value="allSearchFilterComponent.Value"
@@ -48,10 +48,19 @@
                 }
             </InputSelect>
         </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-success"> + </button>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-success"  > <span class="oi oi-plus" aria-hidden="true"></span> Add Filter </button>
         </div>
+        @if (AllFilterComponents.Count > 0)
+    {
+        
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary" @onclick="@RemoveAllFilters"  > <span class="oi oi-trash" aria-hidden="true"></span> Remove All Filters</button>
+            </div>
+
+    }
     </div>
+    
 </EditForm>
 
 <div class="row form-row">
